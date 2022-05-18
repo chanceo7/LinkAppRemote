@@ -1,0 +1,82 @@
+.text-container{
+    background-color: rgb(255, 255, 255);
+    margin-top: 10px;
+    max-width: 600px;
+    min-height:800px;
+}
+
+.me{  
+    color: white;
+    display: flex;
+    justify-content: flex-end;
+}
+.other{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.me div{
+     background-color: rgb(25, 142, 219);
+     padding: 5px;
+     border-radius: 5px;
+     margin-bottom: 5px;
+     margin-right: 5px;
+}
+
+.other div{
+    background-color: rgb(240, 238, 238);
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
+.text{
+    height: 40px;
+    width:520px;
+    border: 2px solid rgb(218, 217, 217);
+}
+
+.send{
+    padding: 10px 15px;
+    margin-left: 5px;
+    color: white;
+    background-color: rgb(25, 142, 219);
+    font-size: large;
+    border: none;
+    border-radius: 5px;
+}
+
+#conv{
+    padding: 15px;
+    border: 1px solid black;
+    width: 200px;
+    background-color: white;
+    cursor: pointer;
+}
+
+#conv:hover{
+    background-color: rgb(35, 100, 138);
+    color: white;
+} 
+
+.container{
+    display: flex;
+}
+
+.conversations {
+    height: 100%;
+    color: white;
+}
+
+.username{
+   font-size: 16pt;
+   text-align: center;
+   background-color:white ;
+}
+
+b{
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgb(212, 212, 212);
+}

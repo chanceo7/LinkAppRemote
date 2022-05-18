@@ -1,25 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
-
+import NavBar from './components/nav-bar/Navbar';
+import Status from './components/status/status';
+import Posts from './components/posts/posts';
+import Home from './components/home/home';
+import Chat from './components/chatBox/chat';
+import Chatwrappe from './components/chatBox/chatwrappe';
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  
+  return(
+    <div className='App'>
+       <Chat/>
     </div>
-  );
+  )
 }
 
 export default App;
