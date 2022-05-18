@@ -60,6 +60,7 @@ function Chat(){
             <div className="chat">
                 <Chatwrappe handleSubmit={handleSubmit} username={username} text={text} setText={e=>{setText(e.target.value)}} messages={messages}/>
                 <div>
+                    <div><p>this the very good idea</p></div>
                     <input type='number' value={id} onChange={e=>{setId(e.target.value)}}/>
                 </div>
             </div>
