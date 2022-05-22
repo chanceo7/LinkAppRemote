@@ -5,23 +5,17 @@ import '../chatBox/chat.css';
 import axios from 'axios';
 
 
-
-
-
-
 function Chat(){
-    const used_id=Math.floor(Math.random() * 20)
+    const used_id=Math.floor(Math.random() * 3)
     const [socket]=useState(()=>io(':8080',{query:{id:used_id}}))
     const [messages, setMessages]=useState([]) 
     const [username,setUsername]=useState('')
     const [id,setId]=useState();
-    const [text,setText ]=useState()
-    const [conversations, setConv]=useState([])
-    
-   
+    const [text,setText ]=useState();
+    const [conversations, setConv]=useState([]);
 
     useEffect(()=>{
-       axios.get(`http://localhost:8080/api/all/conv?id=1`)
+       axios.get(`http://localhost:8080/api/all/conv?id=2`)
        .then(res=>{
             console.log(res.data)
             setConv([])
@@ -32,17 +26,27 @@ function Chat(){
     
     const handleSubmit=(e)=>{
        e.preventDefault();
-       axios.post(`http://localhost:8080/api/all/conv?id=2&txt=${text}&from=me`)
-        .then(res=>{
-           console.log(res.data)
-           setMessages(res.data)
-        })
-        .catch(err=>console.log(err)) 
 
+       const data={
+           message:text,
+           from:'me',
+           id:2
+       }
+       socket.emit('chat message', data,(res)=>{
+           setMessages(prev=>{
+               return [...prev,data]
+           })
+       })
+       setText('')
+       
     }
 
     const loadMessage=(id,username)=>{     
-        
+        axios.get(`http://localhost:8080/api/get/conv`)
+         .then((res)=>{
+            console.log(res.data)
+            setMessages(res.data)
+         })
     }
     
 
