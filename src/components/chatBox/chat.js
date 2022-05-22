@@ -24,7 +24,7 @@ function Chat(){
        axios.get(`http://localhost:8080/api/all/conv?id=1`)
        .then(res=>{
             console.log(res.data)
-            setConv(res.data)
+            setConv([])
         })
         .catch(err=>console.log(err)) 
     },[])
@@ -38,7 +38,7 @@ function Chat(){
            setMessages(res.data)
         })
         .catch(err=>console.log(err)) 
-   
+
     }
 
     const loadMessage=(id,username)=>{     
