@@ -13,6 +13,7 @@ function Chat() {
   const [text, setText] = useState();
   const [conversations, setConv] = useState([]);
 
+
   useEffect(() => {
     axios
       .get(`http://localhost:8080/api/all/conv?id=1`)
@@ -65,6 +66,8 @@ function Chat() {
           <div>
             <div>
               <p>this the very good idea</p>
+
+
             </div>
             <input
               type="number"
