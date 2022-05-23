@@ -13,6 +13,8 @@ export default function Register() {
         email:"",
         password:""
     })
+
+    
     
     function handlechange(element){
         const data={
@@ -77,6 +79,11 @@ export default function Register() {
           />
           <br/>
           <input style={style} type={'submit'} value={'register'}/>
+        </form>
+
+        <h1>logging</h1>
+        <form onSubmit={login}>
+          
         </form>
 
       </div>

@@ -1,29 +1,31 @@
-.text-container{
+.text-container {
     background-color: rgb(255, 255, 255);
     margin-top: 10px;
     max-width: 600px;
-    min-height:800px;
+    min-height: 800px;
 }
 
-.me{  
+.me {
     color: white;
     display: flex;
     justify-content: flex-end;
 }
-.other{
+
+.other {
     display: flex;
     justify-content: flex-start;
+
 }
 
-.me div{
-     background-color: rgb(25, 142, 219);
-     padding: 5px;
-     border-radius: 5px;
-     margin-bottom: 5px;
-     margin-right: 5px;
+.me div {
+    background-color: rgb(25, 142, 219);
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
 }
 
-.other div{
+.other div {
     background-color: rgb(240, 238, 238);
     padding: 5px;
     border-radius: 5px;
@@ -31,13 +33,13 @@
     margin-left: 5px;
 }
 
-.text{
+.text {
     height: 40px;
-    width:520px;
+    width: 520px;
     border: 2px solid rgb(218, 217, 217);
 }
 
-.send{
+.send {
     padding: 10px 15px;
     margin-left: 5px;
     color: white;
@@ -47,7 +49,7 @@
     border-radius: 5px;
 }
 
-#conv{
+#conv {
     padding: 15px;
     border: 1px solid black;
     width: 200px;
@@ -55,12 +57,13 @@
     cursor: pointer;
 }
 
-#conv:hover{
+#conv:hover {
+    background-color: rgb(35, 100, 138);
     background-color: rgb(35, 100, 138);
     color: white;
-} 
+}
 
-.container{
+.container {
     display: flex;
 }
 
@@ -69,13 +72,13 @@
     color: white;
 }
 
-.username{
-   font-size: 16pt;
-   text-align: center;
-   background-color:white ;
+.username {
+    font-size: 16pt;
+    text-align: center;
+    background-color: white;
 }
 
-b{
+b {
     padding: 5px;
     border-radius: 5px;
     background-color: rgb(212, 212, 212);
