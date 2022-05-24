@@ -1,27 +1,21 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useState, useReducer, useContext } from "react";
 import Chatwrappe from "./chatwrappe";
 import io from "socket.io-client";
 import "../chatBox/chat.css";
 import axios from "axios";
+import userData from "../form/usecontexts";
 
 function Chat() {
-  const used_id = Math.floor(Math.random() * 20);
-  const [socket] = useState(() => io(":8080", { query: { id: used_id } }));
+  const info = useContext(userData);
+  const [socket] = useState(() => io(":8080", { query: { id: info.user.id } }));
   const [messages, setMessages] = useState([]);
   const [username, setUsername] = useState("");
   const [id, setId] = useState();
   const [text, setText] = useState();
   const [conversations, setConv] = useState([]);
-
-
+  const [search, setSearch] = useState("");
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/api/all/conv?id=1`)
-      .then((res) => {
-        console.log(res.data);
-        setConv([]);
-      })
-      .catch((err) => console.log(err));
+    console.log(info);
   }, []);
 
   const handleSubmit = (e) => {
@@ -35,10 +29,35 @@ function Chat() {
       .catch((err) => console.log(err));
   };
 
+  const handleSearch =(el)=>{
+      setSearch(el.value)
+      axios
+      .post(``)
+      .then(()=>{
+
+      })
+  }
+
   const loadMessage = (id, username) => {};
 
   return (
     <>
+      <h1>Welcome {info.user.first_name}!!!</h1>
+      <div className="">
+        <label>
+          <h3>Search contact</h3>
+        </label>
+        <input
+          className="text"
+          placeholder="Search"
+          value={search}
+          name="search"
+          onChange={(e) => {
+            handleSearch(e.target);
+          }}
+        />
+      </div>
+      <br/>
       <div className="container">
         <div className="conversations">
           {conversations.map((item, index) => {
@@ -63,25 +82,6 @@ function Chat() {
             }}
             messages={messages}
           />
-          <div>
-            <div>
-              <p>this the very good idea</p>
-
-
-            </div>
-            <input
-              type="number"
-              value={id}
-              onChange={(e) => {
-                setId(e.target.value);
-              }}
-            />
-            <input
-              value={"name"}
-              className={"victoria"}
-              onClick={() => console.log("chance")}
-            />
-          </div>
         </div>
       </div>
     </>
