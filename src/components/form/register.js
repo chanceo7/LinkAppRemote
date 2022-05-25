@@ -21,10 +21,10 @@ export default function Register() {
   const loggin = (e) => {
     e.preventDefault();
     axios.post(`http://localhost:8080/api/loggin`, lForm).then((res) => {
-      console.log(res.data)
       if (res.data.length > 0) {
         info.setUser(res.data[0]);
       }
+      history.push('/chat')
     });
   };
 

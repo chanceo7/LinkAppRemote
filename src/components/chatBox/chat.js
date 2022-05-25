@@ -10,36 +10,75 @@ function Chat() {
   const [socket] = useState(() => io(":8080", { query: { id: info.user.id } }));
   const [messages, setMessages] = useState([]);
   const [username, setUsername] = useState("");
-  const [id, setId] = useState();
+  const [contact, setContact] = useState([]);
   const [text, setText] = useState();
   const [conversations, setConv] = useState([]);
   const [search, setSearch] = useState("");
+  const [receiver, setReceiver] = useState({});
+
   useEffect(() => {
-    console.log(info);
+    socket.on("message received", (data) => {
+      axios
+        .get(`http://localhost:8080/api/get/receiver/${data.receiver_id}`)
+        .then((res) => {
+          console.log(res.data[0]);
+          insertUser(res.data[0]);
+        });
+    });
   }, []);
+
+  const insertUser = (ress) => {
+    console.log("me");
+    if (conversations.length == 0) {
+      setConv((prev) => {
+        return [...prev, ress];
+      });
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post(`http://localhost:8080/api/all/conv?id=2&txt=${text}&from=me`)
-      .then((res) => {
-        console.log(res.data);
-        setMessages(res.data);
-      })
-      .catch((err) => console.log(err));
+    const item = {
+      user_id: info.user.id,
+      receiver_id: receiver.id,
+      message: text,
+      from: "me",
+    };
+    setMessages((prev) => {
+      return [...prev, item];
+    });
+    socket.emit("send message", item);
   };
 
-  const handleSearch =(el)=>{
-      setSearch(el.value)
-      axios
-      .post(``)
-      .then(()=>{
+  const handleSearch = (el) => {
+    setSearch(el.value);
+    const data = el.value;
+    axios
+      .post("http://localhost:8080/api/search/contact", { search: data })
+      .then((res) => {
+        if (res.data) {
+          setContact(res.data);
+        }
+      });
+  };
 
+  const createConv = (contact) => {
+    for (let i = 0; i < conversations.length; i++) {
+      if (conversations[i].id == contact["id"]) {
+        return;
+      }
+    }
+    setConv((prev) => {
+      return [contact, ...prev];
+    });
+    setUsername(contact.first_name);
+    setReceiver(contact);
+  };
 
-      })
-  }
-
-  const loadMessage = (id, username) => {};
+  const loadMessages = (item) => {
+    axios.setUsername(item.first_name);
+    setReceiver(item);
+  };
 
   return (
     <>
@@ -57,18 +96,29 @@ function Chat() {
             handleSearch(e.target);
           }}
         />
+        <div className="contact-container">
+          {contact.map((item, index) => {
+            return (
+              <>
+                <span
+                  key={index + "x"}
+                  onClick={() => createConv(item)}
+                  className="contact"
+                >
+                  {item.first_name}
+                </span>
+              </>
+            );
+          })}
+        </div>
       </div>
-      <br/>
+      <br />
       <div className="container">
         <div className="conversations">
           {conversations.map((item, index) => {
             return (
-              <div
-                key={index}
-                id="conv"
-                onClick={() => loadMessage(item.id, item.user_name)}
-              >
-                <p>{item.user_name}</p>
+              <div key={index} id="conv" onClick={() => loadMessages(item)}>
+                <p>{item.first_name}</p>
               </div>
             );
           })}
