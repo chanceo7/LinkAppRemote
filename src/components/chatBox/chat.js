@@ -15,37 +15,23 @@ function Chat() {
   const [conversations, setConv] = useState([]);
   const [search, setSearch] = useState("");
   const [receiver, setReceiver] = useState({});
-
-  useEffect(() => {
-    socket.on("message received", (data) => {
-      axios
-        .get(`http://localhost:8080/api/get/receiver/${data.receiver_id}`)
-        .then((res) => {
-          console.log(data.message);
-          insertUser(res.data[0]);
-        });
-
-      axios
-        .post(`http://localhost:8080/api/save/received/message`, data)
-        .then((res) => {
-          if (receiver.id == data.receiver_id) {
-            setMessages([...messages, data]);
-          }
-        });
-    });
-  }, []);
+  useEffect(() => {}, []);
+  socket.on("message received", (data) => {
+    if (receiver.id == data.receiver_id) {
+      setMessages([...messages, data]);
+    }
+    insertUser(data.sender);
+  });
 
   const insertUser = (data) => {
     if (conversations[0]) {
       for (let item of conversations) {
         if (item.id == data.id) {
-          console.log(conversations);
           return;
         }
       }
     }
-    setConv([...conversations, data]);
-    console.log(conversations);
+    setConv([data, ...conversations]);
   };
 
   const handleSubmit = (e) => {
@@ -55,11 +41,21 @@ function Chat() {
       receiver_id: receiver.id,
       message: text,
       from: "me",
+      sender: {
+        id: info.user.id,
+        first_name: info.user.first_name,
+        last_name: info.user.last_name,
+      },
     };
     setMessages((prev) => {
       return [...prev, item];
     });
-    socket.emit("send message", item);
+    axios
+      .post("http://localhost:8080/api/save/received/message", item)
+      .then((res) => {
+        socket.emit("send message", item);
+        setText("");
+      });
   };
 
   const handleSearch = (el) => {
