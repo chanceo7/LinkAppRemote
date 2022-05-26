@@ -24,7 +24,7 @@ export default function Register() {
       if (res.data.length > 0) {
         info.setUser(res.data[0]);
       }
-      history.push('/chat')
+      history.push("/chat");
     });
   };
 
@@ -58,15 +58,12 @@ export default function Register() {
     cusor: "pointer",
   };
 
-  useEffect(() => {
-    console.log(info);
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div>
       <div>{info.user.name}</div>
-      <div>
-      </div>
+      <div></div>
       <form onSubmit={handleSubmit}>
         <label>first name: </label>
         <input

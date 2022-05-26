@@ -21,19 +21,31 @@ function Chat() {
       axios
         .get(`http://localhost:8080/api/get/receiver/${data.receiver_id}`)
         .then((res) => {
-          console.log(res.data[0]);
+          console.log(data.message);
           insertUser(res.data[0]);
+        });
+
+      axios
+        .post(`http://localhost:8080/api/save/received/message`, data)
+        .then((res) => {
+          if (receiver.id == data.receiver_id) {
+            setMessages([...messages, data]);
+          }
         });
     });
   }, []);
 
-  const insertUser = (ress) => {
-    console.log("me");
-    if (conversations.length == 0) {
-      setConv((prev) => {
-        return [...prev, ress];
-      });
+  const insertUser = (data) => {
+    if (conversations[0]) {
+      for (let item of conversations) {
+        if (item.id == data.id) {
+          console.log(conversations);
+          return;
+        }
+      }
     }
+    setConv([...conversations, data]);
+    console.log(conversations);
   };
 
   const handleSubmit = (e) => {
@@ -76,8 +88,13 @@ function Chat() {
   };
 
   const loadMessages = (item) => {
-    axios.setUsername(item.first_name);
+    setUsername(item.first_name);
     setReceiver(item);
+    axios
+      .get(`http://localhost:8080/api/load/messages/${item.id}/${info.user.id}`)
+      .then((res) => {
+        setMessages(res.data);
+      });
   };
 
   return (
@@ -99,15 +116,13 @@ function Chat() {
         <div className="contact-container">
           {contact.map((item, index) => {
             return (
-              <>
-                <span
-                  key={index + "x"}
-                  onClick={() => createConv(item)}
-                  className="contact"
-                >
-                  {item.first_name}
-                </span>
-              </>
+              <span
+                key={index + "x"}
+                onClick={() => createConv(item)}
+                className="contact"
+              >
+                {item.first_name}
+              </span>
             );
           })}
         </div>
