@@ -15,6 +15,7 @@ function Chat() {
   const [conversations, setConv] = useState([]);
   const [search, setSearch] = useState("");
   const [receiver, setReceiver] = useState({});
+  const [victoria, setv] = useState();
   useEffect(() => {}, []);
   socket.on("message received", (data) => {
     if (receiver.id == data.receiver_id) {
