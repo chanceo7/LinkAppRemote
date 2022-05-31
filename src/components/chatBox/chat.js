@@ -31,7 +31,7 @@ function Chat() {
       .get(`http://localhost:8080/api/get/conv/${info.user.id}`)
       .then((res) => {
         console.log(res.data);
-        setConversation(res.data);
+        res.data ? setConversation(res.data) : setConversation([]);
       });
   };
 
@@ -39,6 +39,13 @@ function Chat() {
     setConversation((prev) => {
       return [contact[0], ...prev];
     });
+  };
+
+  const clearNotification = (index) => {
+    const data = conversation;
+    data[index].notification = 0;
+    console.log(data);
+    setConversation([...data]);
   };
 
   useEffect(() => {
@@ -53,7 +60,17 @@ function Chat() {
         <button onClick={insert}>insert</button>
         <div className="conversation-container">
           {conversation.map((item, index) => {
-            return <Conversation key={index + "c"} item={item} />;
+            return (
+              <Conversation
+                key={index + "c"}
+                id={item.conv_id}
+                name={item.first_name}
+                notification={item.notification}
+                click={() => {
+                  clearNotification(index);
+                }}
+              />
+            );
           })}
         </div>
       </div>

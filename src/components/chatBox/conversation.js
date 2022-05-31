@@ -1,34 +1,43 @@
-import React, { useState, useEffect } from "react";
+import axios from "axios";
+import React, { useState, useEffect, useReducer, useMemo } from "react";
 
-export default function Conversation({ item }) {
-  const notification = item.notification;
-  const [num, setNum] = useState(0);
-  const reset = () => {
-    setNum(0);
+function Conversation(props) {
+  const clearNotification = (e) => {
+    if (props.notification > 0) {
+      axios
+        .post(`http://localhost:8080/api/clear/notification/${props.id}`)
+        .then(() => {
+          console.log("cleard");
+        });
+      return;
+    }
+
+    console.log("unchanged : " + 0);
   };
-
-  const set = (num) => {
-    setNum(num);
-  };
-
-  useEffect(() => {
-    set(notification);
-    console.log("item :", item);
-  }, [item]);
 
   return (
-    <div className="conversation" onClick={reset}>
-      <img
-        className="pro-img"
-        src="https://static1.cbrimages.com/wordpress/wp-content/uploads/2020/08/Featured-Hated-Loved-Sasuke-Uchiha.jpg?q=50&fit=crop&w=1600&dpr=1.5"
-        alt="pro-img"
-      />
-      <p>{item.first_name}</p>
-      <div className="notification">
-        {num > 0 && (
-          <div id={notification == 0 ? "transp" : ""}>{notification}</div>
-        )}
+    <div
+      onClick={(e) => {
+        clearNotification(e);
+      }}
+    >
+      <div className="conversation" onClick={props.click}>
+        <img
+          className="pro-img"
+          src="https://static1.cbrimages.com/wordpress/wp-content/uploads/2020/08/Featured-Hated-Loved-Sasuke-Uchiha.jpg?q=50&fit=crop&w=1600&dpr=1.5"
+          alt="pro-img"
+        />
+        <p>{props.name}</p>
+        <div className="notification">
+          {props.notification > 0 && (
+            <div id={props.notification == 0 ? "transp" : ""}>
+              {props.notification}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 }
+
+export default Conversation;
