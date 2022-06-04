@@ -2,7 +2,7 @@
     background-color: rgb(255, 255, 255);
     margin-top: 10px;
     max-width: 600px;
-    min-height: 800px;
+    min-height: 600px;
 }
 
 .me {
@@ -65,30 +65,39 @@
 
 .container {
     display: flex;
+
 }
 
 .conversation-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     min-height:600px;
     min-width: 200px;
     background-color: white;
     color: white;
     border-radius: 5px;
-    border: 1px solid rgba(128, 128, 128, 0.712);  
+    border: 1px solid rgba(128, 128, 128, 0.712); 
+    padding-top: 5px; 
 }
 
 .conversation{
-    max-width: 200px;
-    max-width: 40px;
+    min-width: 200px;
+
     display: flex;
+    margin-left: 5px;
     justify-content: flex-start;
     align-items: center;
     gap:10px;
+    position: relative;
 }
 
 .notification{
     display: flex;
     align-items: center;
     justify-content: center;
+    position: absolute;
+    left: 155px;
 }
 .notification div{
     display: flex;
@@ -104,6 +113,7 @@
     font-size: 16pt;
     text-align: center;
     background-color: white;
+    max-width: 600px;
 }
 
 b {
@@ -152,4 +162,9 @@ b {
 
 .list-cont{
     padding: 15px;
+}
+
+
+.chatboxs{
+    display: flex;
 }
