@@ -111,9 +111,13 @@
 
 .username {
     font-size: 16pt;
+    padding-left: 200px;
+    display: flex;
+    justify-items: center;
     text-align: center;
     background-color: white;
     max-width: 600px;
+    gap: 250px;
 }
 
 b {
@@ -167,4 +171,57 @@ b {
 
 .chatboxs{
     display: flex;
+}
+
+.receiver-info h3{
+   background-color: black;
+   width: 35px;
+   height:35px;
+   color: white;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 50%;
+}
+
+.receiver-action{
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    padding: 10px;
+    margin-top: 10px;
+    border:1px solid rgba(128, 128, 128, 0.548)
+
+}
+
+#receiver-delete p{
+    background-color:  #ff857cda;
+    color:  #68222b; 
+    width: fit-content;
+    padding: 2px;
+    border-radius: 5px;
+}
+#receiver-block p{
+    background-color: #e3e3e3;
+    color:  #233142;
+    width: fit-content;
+    padding: 2px;
+    border-radius: 5px;
+}
+#receiver-report p{
+    background-color:   #e4f1fe;
+    color:   #81bcf8;
+    width: fit-content;
+    padding: 2px;
+    border-radius: 5px;
+        
+}
+
+.receiver-name{
+    padding: 10px;
+    
+}
+
+.hide{
+    visibility:hidden
 }

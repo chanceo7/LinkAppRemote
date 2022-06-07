@@ -37,6 +37,9 @@ function Chat() {
       .then((res) => {
         console.log(res.data);
         res.data ? setConversation(res.data) : setConversation([]);
+        const conv_id = sessionStorage.getItem("conv_id");
+        conv_id == "zzzz" &&
+          sessionStorage.setItem("conv_id", res.data[0].conv_id);
       });
   };
 
@@ -83,10 +86,17 @@ function Chat() {
     console.log("render");
   };
 
+  const deleteChat = () => {
+    axios.post("http://localhost:8080/api/delete/conv").then((res) => {});
+  };
+
   return (
     <div className="">
       <h1>Welcome {info.user.first_name}</h1>
-      <Search lift={(cont) => insertContact(cont)} />
+      <Search
+        lift={(cont) => insertContact(cont)}
+        conversation={conversation}
+      />
       <button onClick={insert}>insert</button>
       <div className="chatboxs">
         <div className="conversation-container">
@@ -98,11 +108,14 @@ function Chat() {
                 name={item.first_name}
                 notification={item.notification}
                 click={() => {
-                  sessionStorage.setItem("receiver", item.receiver_id);
-                  sessionStorage.setItem("conv_id", item.conv_id);
+                  sessionStorage.setItem("receiver", item.id);
+                  sessionStorage.setItem(
+                    "conv_id",
+                    isNaN(item.conv_id) ? "zzzz" : item.conv_id
+                  );
                   sessionStorage.setItem("notification", item.notification);
                   sessionStorage.setItem("index", index);
-                  getMessages(item.receiver_id, info.user.id);
+                  getMessages(item.id, info.user.id);
                   setName(item.first_name);
                   setContact(item);
                   clearNotification();
@@ -113,6 +126,7 @@ function Chat() {
         </div>
         <Chatwrappe
           name={name}
+          deleteChat={() => deleteChat()}
           messages={messages}
           socket={socket}
           contact={contact}

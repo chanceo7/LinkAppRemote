@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import "../chatBox/chat.css";
 import userData from "../form/usecontexts";
 
@@ -9,6 +9,7 @@ export default function Chatwrappe(props) {
   const [data, setData] = useState([]);
   const texts = props.messages;
   const socket = props.socket;
+  const detail = useRef();
 
   function text_faSliders(texts) {
     const box = [];
@@ -39,7 +40,11 @@ export default function Chatwrappe(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     clearNotif();
-    const conv_id = sessionStorage.getItem("conv_id");
+    let conv_id = sessionStorage.getItem("conv_id");
+    if (isNaN(conv_id)) {
+      conv_id = "zzzz";
+    }
+
     const data = {
       user_id: info.user.id,
       receiver_id: props.contact.id,
@@ -61,10 +66,26 @@ export default function Chatwrappe(props) {
       });
   };
 
+  const toggleDetails = () => {
+    const list = detail.current.classList;
+    list.length == 2
+      ? detail.current.classList.remove("hide")
+      : detail.current.classList.add("hide");
+    console.log(detail.current.classList);
+  };
+
   return (
     <div>
       <div className="username">
         <b>{props.name}</b>
+        <div
+          className="receiver-info"
+          onClick={() => {
+            toggleDetails();
+          }}
+        >
+          <h3>i</h3>
+        </div>
       </div>
       <div className="text-container">{data}</div>
       <div className="input">
@@ -79,6 +100,22 @@ export default function Chatwrappe(props) {
           />
           <input className="send" type={"submit"} value={"send"} />
         </form>
+      </div>
+      <div ref={detail} className="receiver">
+        <div className="receiver-name">
+          <h2>{props.name}</h2>
+        </div>
+        <div className="receiver-action">
+          <div id="receiver-delete">
+            <p onClick={props.deleteChat}>Delete Chat</p>
+          </div>
+          <div id="receiver-block">
+            <p>Block</p>
+          </div>
+          <div id="receiver-report">
+            <p>Report</p>
+          </div>
+        </div>
       </div>
     </div>
   );

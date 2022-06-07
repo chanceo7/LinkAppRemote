@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import userData from "./usecontexts";
 import axios from "axios";
 
 function Search(props) {
   const [search, setSearch] = useState("");
   const [contacts, setContact] = useState([]);
   const [receiverList, setReceiverList] = useState([]);
+  const info = useContext(userData);
+  const conversation = props.conversation;
 
   const handleSearch = (el) => {
     setSearch(el.value);
@@ -23,12 +26,17 @@ function Search(props) {
   };
 
   const insertReceiver = (data) => {
-    setReceiverList((prev) => {
-      return [data, ...prev];
-    });
+    if (data.id == info.user.id) return;
+    setReceiverList([data]);
   };
 
   const lift = (e) => {
+    setReceiverList([]);
+    setContact([]);
+    setSearch("");
+    for (let item of conversation) {
+      if (item.id == receiverList[0].id) return;
+    }
     props.lift(receiverList);
   };
 
