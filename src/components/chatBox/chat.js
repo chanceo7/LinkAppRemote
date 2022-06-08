@@ -87,7 +87,13 @@ function Chat() {
   };
 
   const deleteChat = () => {
-    axios.post("http://localhost:8080/api/delete/conv").then((res) => {});
+    const R = sessionStorage.getItem("receiver");
+    const U = info.user.id;
+    axios
+      .delete(`http://localhost:8080/api/delete/chat/${R}/${U}`)
+      .then((res) => {
+        rerender();
+      });
   };
 
   return (

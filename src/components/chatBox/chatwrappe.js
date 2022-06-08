@@ -22,12 +22,21 @@ export default function Chatwrappe(props) {
           )
         : box.push(
             <div key={i} className="me">
+              <img
+                onClick={() => deleteMsg(i)}
+                src="https://cdn.onlinewebfonts.com/svg/img_117750.png"
+              />
               <div>{texts[i].message}</div>
             </div>
           );
     }
     setData(box);
   }
+
+  const deleteMsg = (index) => {
+    texts.splice(index, 1);
+    text_faSliders(texts);
+  };
 
   const clearNotif = () => {
     props.clear();
@@ -106,8 +115,8 @@ export default function Chatwrappe(props) {
           <h2>{props.name}</h2>
         </div>
         <div className="receiver-action">
-          <div id="receiver-delete">
-            <p onClick={props.deleteChat}>Delete Chat</p>
+          <div id="receiver-delete" onClick={props.deleteChat}>
+            <p>Delete Chat</p>
           </div>
           <div id="receiver-block">
             <p>Block</p>
