@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect, useReducer, useMemo } from "react";
+import "../chatBox/chat.css";
 
 function Conversation(props) {
   const clearNotification = (e) => {
@@ -21,13 +22,13 @@ function Conversation(props) {
         clearNotification(e);
       }}
     >
-      <div className="conversation" onClick={props.click}>
+      <div id="conversation" onClick={props.click}>
         <img
           className="pro-img"
           src="https://static1.cbrimages.com/wordpress/wp-content/uploads/2020/08/Featured-Hated-Loved-Sasuke-Uchiha.jpg?q=50&fit=crop&w=1600&dpr=1.5"
           alt="pro-img"
         />
-        <p>{props.name}</p>
+        <span className="names">{props.name}</span>
         <div className="notification">
           {props.notification > 0 && (
             <div id={props.notification == 0 ? "transp" : ""}>

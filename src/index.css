@@ -4,6 +4,8 @@ body {
   font-size: 13pt;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  justify-content: center;
+  display: flex;
 }
 
 code {

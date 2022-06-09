@@ -7,17 +7,16 @@ import Chat from "./components/chatBox/chat";
 import Chatwrappe from "./components/chatBox/chatwrappe";
 import Register from "./components/form/register";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
-import userData from "./components/form/usecontexts"
+import userData from "./components/form/usecontexts";
 import React, { useState } from "react";
 function App() {
-  const [user,setUser]=useState({
-    first_name:""
-  })
+  const [user, setUser] = useState({
+    first_name: "",
+  });
   return (
     <div className="App">
-      <userData.Provider value={{user,setUser}}>
+      <userData.Provider value={{ user, setUser }}>
         <BrowserRouter>
-          <h1>navigation</h1>
           <p>
             <Link to="/">home</Link>| |<Link to="/chat">chat</Link>
           </p>

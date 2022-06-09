@@ -41,10 +41,11 @@ function Search(props) {
   };
 
   return (
-    <div>
+    <div className="search">
       <form>
-        <label>Search :</label>
         <input
+          className="search-input"
+          placeholder="Search contact"
           type={"text"}
           value={search}
           onChange={(e) => handleSearch(e.target)}

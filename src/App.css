@@ -22,4 +22,6 @@ img, button:hover{
   display: flex;
   justify-content: center;
   float:inline-start;
+  gap: 10px;
 }
+

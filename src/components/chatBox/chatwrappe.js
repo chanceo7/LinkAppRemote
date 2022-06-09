@@ -23,19 +23,41 @@ export default function Chatwrappe(props) {
         : box.push(
             <div key={i} className="me">
               <img
-                onClick={() => deleteMsg(i)}
+                className="me-delete"
+                onClick={() => deleteMsg(i, texts[i].id)}
                 src="https://cdn.onlinewebfonts.com/svg/img_117750.png"
               />
-              <div>{texts[i].message}</div>
+              <div
+                onMouseEnter={(e) => hover(e)}
+                onMouseLeave={(e) => hoverOut(e)}
+                className="me-text"
+              >
+                {texts[i].message}
+              </div>
             </div>
           );
     }
     setData(box);
   }
 
-  const deleteMsg = (index) => {
-    texts.splice(index, 1);
-    text_faSliders(texts);
+  const hover = (e) => {
+    const element = e.target.parentNode.querySelector(".me-delete");
+    element.style.visibility = "visible";
+    console.log(element);
+  };
+  const hoverOut = (e) => {
+    const element = e.target.parentNode.querySelector(".me-delete");
+    element.style.visibility = "hidden";
+    console.log(element);
+  };
+
+  const deleteMsg = (index, id) => {
+    axios
+      .delete(`http://localhost:8080/api/delete/massages/${id}`)
+      .then((res) => {
+        texts.splice(index, 1);
+        text_faSliders(texts);
+      });
   };
 
   const clearNotif = () => {
@@ -76,52 +98,69 @@ export default function Chatwrappe(props) {
   };
 
   const toggleDetails = () => {
-    const list = detail.current.classList;
-    list.length == 2
-      ? detail.current.classList.remove("hide")
-      : detail.current.classList.add("hide");
-    console.log(detail.current.classList);
+    props.toggleDetails();
   };
 
   return (
-    <div>
-      <div className="username">
-        <b>{props.name}</b>
+    <div className="chat">
+      <div className="chat-profile">
+        <div className="chat-profile-user">
+          <img
+            className="chat-profile-img"
+            src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/07b59814110649.5627d8aa58212.jpg"
+          />
+          <h2>{props.name}</h2>
+        </div>
         <div
           className="receiver-info"
           onClick={() => {
             toggleDetails();
           }}
         >
-          <h3>i</h3>
+          <h3
+            className={
+              props.toggle == true ? "action-desactive" : "action-active"
+            }
+          >
+            i
+          </h3>
         </div>
       </div>
       <div className="text-container">{data}</div>
-      <div className="input">
-        <form onSubmit={handleSubmit}>
+      <div className="chat-input-container">
+        <form className="text-form" onSubmit={handleSubmit}>
           <input
-            className="text"
+            className="text-input"
             type={"text"}
             value={text}
             onChange={(e) => {
               setText(e.target.value);
             }}
           />
-          <input className="send" type={"submit"} value={"send"} />
+          <svg class="send" viewBox="0 0 70 50">
+            <path
+              stroke="transparent"
+              xmlns="http://www.w3.org/2000/svg"
+              d="M 0 0 L 70 25 L 0 50 L 20 25"
+            />
+          </svg>
         </form>
       </div>
-      <div ref={detail} className="receiver">
-        <div className="receiver-name">
-          <h2>{props.name}</h2>
+      <div ref={detail} className="chat-action" id={props.toggle ? "hide" : ""}>
+        <div className="receiver-type">
+          <h4>Actions</h4>
         </div>
         <div className="receiver-action">
           <div id="receiver-delete" onClick={props.deleteChat}>
+            <img src="https://th.bing.com/th/id/OIP.MeHH1uPILocqcbznizYrggHaHa?pid=ImgDet&rs=1" />
             <p>Delete Chat</p>
           </div>
           <div id="receiver-block">
+            <img src="https://th.bing.com/th/id/R.5d65a339c8fb4b867e7cddb2d2c34925?rik=lv0ctMESdPTYmg&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fdownload_559077.png&ehk=r5SSG1ie5LT4J5YGqxS1wNQL7k0VSR3mMrJdd%2fCFz5E%3d&risl=&pid=ImgRaw&r=0" />
             <p>Block</p>
           </div>
           <div id="receiver-report">
+            <img src="https://cdn.onlinewebfonts.com/svg/img_78870.png" />
             <p>Report</p>
           </div>
         </div>

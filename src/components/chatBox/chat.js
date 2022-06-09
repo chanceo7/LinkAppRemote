@@ -17,6 +17,7 @@ function Chat() {
   const [name, setName] = useState("");
   const [contact, setContact] = useState({});
   const [render, setRender] = useState([]);
+  const [toggle, setToggle] = useState(true);
 
   const insert = () => {
     const data = {
@@ -96,9 +97,25 @@ function Chat() {
       });
   };
 
+  const toggleDetails = () => {
+    toggle ? setToggle(false) : setToggle(true);
+  };
+
   return (
-    <div className="">
-      <h1>Welcome {info.user.first_name}</h1>
+    <div className="home">
+      <div className="home-topbar">
+        <div className="home-topbar-profile">
+          <img
+            className="home-profile-img"
+            src="https://yt3.ggpht.com/a/AATXAJwx-_ZnZdDNMMZc8EhFdOsjcPkVIgj89NK8CQ=s900-c-k-c0xffffffff-no-rj-mo"
+          />
+          <h3> welcome {info.user.first_name}</h3>
+        </div>
+        <div className="home-topbar-action">
+          <div className="about-logout">about</div>
+          <div className="about-logout">logout</div>
+        </div>
+      </div>
       <Search
         lift={(cont) => insertContact(cont)}
         conversation={conversation}
@@ -125,6 +142,7 @@ function Chat() {
                   setName(item.first_name);
                   setContact(item);
                   clearNotification();
+                  setToggle(true);
                 }}
               />
             );
@@ -132,6 +150,8 @@ function Chat() {
         </div>
         <Chatwrappe
           name={name}
+          toggleDetails={() => toggleDetails()}
+          toggle={toggle}
           deleteChat={() => deleteChat()}
           messages={messages}
           socket={socket}
