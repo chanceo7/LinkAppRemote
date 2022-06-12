@@ -14,21 +14,33 @@
     gap: 10px;
     justify-content: flex-end;
     align-items: center;
-
 }
 
-
-
-.me-delete{
-    width: 40px;
-    height: 40px;
+.me-actions{
+    display: flex;
+    justify-content: center;
+    gap:10px;
+    align-items: center;
     visibility: hidden;
 }
+
+.me-actions img{
+    width: 40px;
+    height: 40px;
+}
+
+.me-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
 
 .other {
     display: flex;
     justify-content: flex-start;
-
+    
 }
 
 .me-text {

@@ -22,17 +22,18 @@ export default function Chatwrappe(props) {
           )
         : box.push(
             <div key={i} className="me">
-              <img
-                className="me-delete"
-                onClick={() => deleteMsg(i, texts[i].id)}
-                src="https://cdn.onlinewebfonts.com/svg/img_117750.png"
-              />
-              <div
-                onMouseEnter={(e) => hover(e)}
-                onMouseLeave={(e) => hoverOut(e)}
-                className="me-text"
-              >
-                {texts[i].message}
+              <div className="me-container" onMouseLeave={(e) => hoverOut(e)}>
+                <div className="me-actions">
+                  <img src="https://th.bing.com/th/id/R.ccf12f5c262b2b519058da31788b63cf?rik=mP%2bRDuN7PYbpWA&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_93739.png&ehk=PqryfzeV9vZZXkeKlBWUlAfhbJAT%2f3uN4%2bn7C%2b4bRWc%3d&risl=&pid=ImgRaw&r=0" />
+                  <img
+                    className="me-delete"
+                    onClick={() => deleteMsg(i, texts[i].id)}
+                    src="https://cdn.onlinewebfonts.com/svg/img_117750.png"
+                  />
+                </div>
+                <div onMouseEnter={(e) => hover(e)} className="me-text">
+                  {texts[i].message}
+                </div>
               </div>
             </div>
           );
@@ -41,13 +42,20 @@ export default function Chatwrappe(props) {
   }
 
   const hover = (e) => {
-    const element = e.target.parentNode.querySelector(".me-delete");
+    const element = e.target.parentNode.querySelector(".me-actions");
     element.style.visibility = "visible";
-    console.log(element);
   };
   const hoverOut = (e) => {
-    const element = e.target.parentNode.querySelector(".me-delete");
-    element.style.visibility = "hidden";
+    const target = e.target.parentNode;
+    console.log(" targert ", target);
+    const element = e.target.parentNode.querySelector(".me-actions");
+    if (element) {
+      element.style.visibility = "hidden";
+    } else {
+      const div = target.parentNode.querySelector(".me-actions");
+      console.log("div", div);
+      div.style.visibility = "hidden";
+    }
     console.log(element);
   };
 
@@ -137,7 +145,11 @@ export default function Chatwrappe(props) {
               setText(e.target.value);
             }}
           />
-          <svg class="send" viewBox="0 0 70 50">
+          <svg
+            onClick={(e) => handleSubmit(e)}
+            class="send"
+            viewBox="0 0 70 50"
+          >
             <path
               stroke="transparent"
               xmlns="http://www.w3.org/2000/svg"
