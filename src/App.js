@@ -5,6 +5,7 @@ import Posts from "./components/posts/posts";
 import Home from "./components/home/home";
 import Chat from "./components/chatBox/chat";
 import Chatwrappe from "./components/chatBox/chatwrappe";
+import Checkbox from "./components/form/checkbox";
 import Register from "./components/form/register";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import userData from "./components/form/usecontexts";

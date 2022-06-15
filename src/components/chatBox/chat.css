@@ -391,28 +391,36 @@ b {
 }
 
 .forward{
-  width: 600px;
-  height: 800px;
+    width: 350px;
+    background-color: white;
+    font-weight: bolder;
 }
 
 .forward-container{
    border: 1px solid black;
    border-radius: 15px;
    padding: 5px;
+   background-color: white;
+}
 
+.forward-search{
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .forward-to{
     font-size: 16pt;
+    display: inline;
     color: black;
+    background-color: white;
 }
 
-.forward-search{
-    
-}
+
 
 .forward-results{
     display: flex;
+    gap: 5px;
     flex-wrap: wrap;
 }
 
@@ -438,3 +446,27 @@ b {
     object-fit: cover;
     border-radius: 50%;
 }
+
+.forward-input{
+    padding: 5px 0px;
+    font-size: 14pt;
+    font-family:'Handlee',cursive;
+    outline: none;
+    border:transparent ;
+}
+
+.forward-contact{
+    background-color: rgba(62, 239, 252, 0.226);
+    color:rgb(23, 166, 185) ;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14pt;
+}
+
+.close{
+    font-size: 18pt;
+    margin-left: 10px;
+    font-family: sans-serif;
+    cursor: pointer;
+}
+

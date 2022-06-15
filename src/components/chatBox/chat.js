@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-
+import Checkbox from "../form/checkbox";
 import io from "socket.io-client";
 import "../chatBox/chat.css";
 import axios from "axios";
@@ -7,6 +7,7 @@ import userData from "../form/usecontexts";
 import Conversation from "./conversation";
 import Search from "../form/search";
 import Chatwrappe from "./chatwrappe";
+import Forward from "./forward";
 
 function Chat() {
   const info = useContext(userData);
@@ -161,6 +162,7 @@ function Chat() {
           }}
         />
       </div>
+      <Forward conversation={conversation} />
     </div>
   );
 }
