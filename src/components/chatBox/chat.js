@@ -7,7 +7,6 @@ import userData from "../form/usecontexts";
 import Conversation from "./conversation";
 import Search from "../form/search";
 import Chatwrappe from "./chatwrappe";
-import Forward from "./forward";
 
 function Chat() {
   const info = useContext(userData);
@@ -79,9 +78,18 @@ function Chat() {
   }, [render]);
 
   let received = [];
+
+  // socket----------------------------------
   socket.on("message received", (data) => {
     setRender([...render, data]);
   });
+
+  socket.on("fowarded received", (rendr) => {
+    console.log("forward");
+    setRender([...render, "render"]);
+  });
+
+  // socket ----------------------------------
 
   const rerender = () => {
     setRender([...render, "render"]);
@@ -155,6 +163,7 @@ function Chat() {
           toggle={toggle}
           deleteChat={() => deleteChat()}
           messages={messages}
+          conversation={conversation}
           socket={socket}
           contact={contact}
           clear={() => {
@@ -162,7 +171,6 @@ function Chat() {
           }}
         />
       </div>
-      <Forward conversation={conversation} />
     </div>
   );
 }

@@ -31,6 +31,7 @@ function App() {
           </Switch>
         </BrowserRouter>
       </userData.Provider>
+      <div id="overlay"></div>
     </div>
   );
 }

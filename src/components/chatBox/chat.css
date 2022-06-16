@@ -392,21 +392,22 @@ b {
 
 .forward{
     width: 350px;
-    background-color: white;
+    background-color: transparent;
     font-weight: bolder;
 }
 
 .forward-container{
-   border: 1px solid black;
+   border: 1px solid gray;
    border-radius: 15px;
    padding: 5px;
    background-color: white;
+   height: 500px;
 }
 
 .forward-search{
     display: flex;
-    align-items: center;
     gap: 5px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.541);
 }
 
 .forward-to{
@@ -425,13 +426,25 @@ b {
 }
 
 .forward-conversation{
-    border-top: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .forward-conv-box{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 5px;
+  padding:5px;
+}
+
+.forward-conv-box:hover{
+    background-color:rgba(23, 166, 185, 0.836);
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
 }
 
 .conv-box{
@@ -458,15 +471,109 @@ b {
 .forward-contact{
     background-color: rgba(62, 239, 252, 0.226);
     color:rgb(23, 166, 185) ;
+    position: relative;
     padding: 5px;
+    display: flex;
+    gap: 10px;
     border-radius: 5px;
-    font-size: 14pt;
+    font-size: 12pt;
+    animation-duration: 0.2s;
+}
+
+@keyframes shake {
+  0%   { background-color: rgba(184, 83, 83, 0.514); color:#68222b; left: 0px ; left:5px; }
+  25%  {left: 5px ; left:0px; }
+  50%  {left: 0px ; left:5px; }
+  75%  {left: 5px ; left:0px; }
+  100% {left: 0px ; left:5px; }
 }
 
 .close{
-    font-size: 18pt;
+    font-size: 10pt;
     margin-left: 10px;
     font-family: sans-serif;
     cursor: pointer;
+    display: contents;
+    color: #233142;
 }
 
+.forward-top-bar{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.678);
+    margin-bottom: 2px;
+}
+
+.send-able{
+    color: rgb(49, 147, 204);
+    padding: 2px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.send-able:hover{
+    color: rgb(49, 147, 204);
+    border: 1px solid rgb(49, 147, 204);
+}
+
+.send-able:active{
+    background-color: rgb(49, 147, 204);
+    border: 1px solid rgb(49, 147, 204);
+    color: white;
+}
+
+.send-disable{
+    color: rgb(175, 175, 175);
+    cursor:not-allowed;
+    padding: 2px;
+    border: 1px solid transparent;
+}
+
+
+.forward-absolute{
+    display: none;
+}
+
+.closeX{
+  border: 1px solid transparent;
+  color: black;
+  border-radius: 5px;
+  padding: 2px 5px;
+  font-family: sans-serif;
+  font-size: 16pt;
+}
+
+.closeX:hover{
+  border: 1px solid black;  
+  border-radius: 5px;
+  cursor: pointer;
+}
+.closeX:active{
+  border: 1px solid black;  
+  border-radius: 5px;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+
+
+.top{
+    position: fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%) scale(0);
+    z-index: 10;
+}
+
+#overlay{
+    position: fixed;
+    top: 0px;
+    transform:  scale(0);
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 8;
+    background-color: rgba(110, 110, 110, 0.575);
+}

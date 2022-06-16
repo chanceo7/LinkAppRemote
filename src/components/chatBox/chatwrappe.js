@@ -1,15 +1,19 @@
+import { render } from "@testing-library/react";
 import axios from "axios";
 import React, { useEffect, useState, useContext, useRef } from "react";
 import "../chatBox/chat.css";
 import userData from "../form/usecontexts";
+import Forward from "./forward";
 
 export default function Chatwrappe(props) {
   const info = useContext(userData);
   const [text, setText] = useState("");
   const [data, setData] = useState([]);
+  const [toFoward, setToFoward] = useState("");
   const texts = props.messages;
   const socket = props.socket;
   const detail = useRef();
+  const [render, setRender] = useState([]);
 
   function text_faSliders(texts) {
     const box = [];
@@ -24,7 +28,12 @@ export default function Chatwrappe(props) {
             <div key={i} className="me">
               <div className="me-container" onMouseLeave={(e) => hoverOut(e)}>
                 <div className="me-actions">
-                  <img src="https://th.bing.com/th/id/R.ccf12f5c262b2b519058da31788b63cf?rik=mP%2bRDuN7PYbpWA&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_93739.png&ehk=PqryfzeV9vZZXkeKlBWUlAfhbJAT%2f3uN4%2bn7C%2b4bRWc%3d&risl=&pid=ImgRaw&r=0" />
+                  <img
+                    onClick={() => {
+                      forward(texts[i].message);
+                    }}
+                    src="https://th.bing.com/th/id/R.ccf12f5c262b2b519058da31788b63cf?rik=mP%2bRDuN7PYbpWA&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_93739.png&ehk=PqryfzeV9vZZXkeKlBWUlAfhbJAT%2f3uN4%2bn7C%2b4bRWc%3d&risl=&pid=ImgRaw&r=0"
+                  />
                   <img
                     className="me-delete"
                     onClick={() => deleteMsg(i, texts[i].id)}
@@ -41,13 +50,21 @@ export default function Chatwrappe(props) {
     setData(box);
   }
 
+  const forward = (msg) => {
+    setRender([...render, "render"]);
+    setToFoward(msg);
+    const popup = document.querySelector(".top").style;
+    const overlay = document.querySelector("#overlay").style;
+    popup.transform = " translate(-50%,-50%) scale(1)";
+    overlay.transform = " translate(-50%,-50%) scale(2)";
+  };
+
   const hover = (e) => {
     const element = e.target.parentNode.querySelector(".me-actions");
     element.style.visibility = "visible";
   };
   const hoverOut = (e) => {
     const target = e.target.parentNode;
-    console.log(" targert ", target);
     const element = e.target.parentNode.querySelector(".me-actions");
     if (element) {
       element.style.visibility = "hidden";
@@ -56,7 +73,6 @@ export default function Chatwrappe(props) {
       console.log("div", div);
       div.style.visibility = "hidden";
     }
-    console.log(element);
   };
 
   const deleteMsg = (index, id) => {
@@ -78,7 +94,6 @@ export default function Chatwrappe(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    clearNotif();
     let conv_id = sessionStorage.getItem("conv_id");
     if (isNaN(conv_id)) {
       conv_id = "zzzz";
@@ -98,6 +113,7 @@ export default function Chatwrappe(props) {
       .post(`http://localhost:8080/api/save/received/message/${conv_id}`, data)
       .then((res) => {
         console.log(res);
+        clearNotif();
         socket.emit("send message", data);
         texts.push(data);
         setText("");
@@ -111,6 +127,13 @@ export default function Chatwrappe(props) {
 
   return (
     <div className="chat">
+      <Forward
+        conversation={props.conversation}
+        msg={toFoward}
+        socket={socket}
+        render={render}
+        conv_render={() => props.clear()}
+      />
       <div className="chat-profile">
         <div className="chat-profile-user">
           <img
@@ -147,7 +170,7 @@ export default function Chatwrappe(props) {
           />
           <svg
             onClick={(e) => handleSubmit(e)}
-            class="send"
+            className="send"
             viewBox="0 0 70 50"
           >
             <path

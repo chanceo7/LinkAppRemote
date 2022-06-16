@@ -22,7 +22,7 @@ export default function Checkbox(props) {
         {props.state ? (
           <svg className={checkbox} viewBox="0 0 50 50">
             <circle
-              class="circle"
+              className="circle"
               cx="25"
               cy="25"
               r="24"
