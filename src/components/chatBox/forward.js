@@ -99,6 +99,7 @@ function Forward(props) {
   useEffect(() => {
     setconv(conversation);
     setContact([]);
+    setDisable(true);
   }, [props.render]);
 
   return (

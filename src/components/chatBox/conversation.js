@@ -4,6 +4,7 @@ import "../chatBox/chat.css";
 
 function Conversation(props) {
   const clearNotification = (e) => {
+    document.querySelector(".chatwrappe-cover").style.visibility = "hidden";
     if (props.notification > 0) {
       axios
         .post(`http://localhost:8080/api/clear/notification/${props.id}`)

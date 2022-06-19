@@ -4,6 +4,7 @@ import React, { useEffect, useState, useContext, useRef } from "react";
 import "../chatBox/chat.css";
 import userData from "../form/usecontexts";
 import Forward from "./forward";
+import coverMessage from "../../coverMessage.png";
 
 export default function Chatwrappe(props) {
   const info = useContext(userData);
@@ -125,6 +126,11 @@ export default function Chatwrappe(props) {
     props.toggleDetails();
   };
 
+  const coverChat = () => {
+    document.querySelector(".chatwrappe-cover").style.visibility = "visible";
+    props.deleteChat();
+  };
+
   return (
     <div className="chat">
       <Forward
@@ -160,7 +166,7 @@ export default function Chatwrappe(props) {
       <div className="text-container">{data}</div>
       <div className="chat-input-container">
         <form className="text-form" onSubmit={handleSubmit}>
-          <input
+          <textarea
             className="text-input"
             type={"text"}
             value={text}
@@ -186,7 +192,12 @@ export default function Chatwrappe(props) {
           <h4>Actions</h4>
         </div>
         <div className="receiver-action">
-          <div id="receiver-delete" onClick={props.deleteChat}>
+          <div
+            id="receiver-delete"
+            onClick={() => {
+              coverChat();
+            }}
+          >
             <img src="https://th.bing.com/th/id/OIP.MeHH1uPILocqcbznizYrggHaHa?pid=ImgDet&rs=1" />
             <p>Delete Chat</p>
           </div>
@@ -199,6 +210,9 @@ export default function Chatwrappe(props) {
             <p>Report</p>
           </div>
         </div>
+      </div>
+      <div className="chatwrappe-cover">
+        <img src={coverMessage} alt="coverMessage" />
       </div>
     </div>
   );

@@ -14,6 +14,14 @@ function App() {
   const [user, setUser] = useState({
     first_name: "",
   });
+
+  const closePopup = () => {
+    const popup = document.querySelector(".top").style;
+    const overlay = document.querySelector("#overlay").style;
+    popup.transform = " translate(-50%,-50%) scale(0)";
+    overlay.transform = " translate(-50%,-50%) scale(0)";
+  };
+
   return (
     <div className="App">
       <userData.Provider value={{ user, setUser }}>
@@ -31,7 +39,7 @@ function App() {
           </Switch>
         </BrowserRouter>
       </userData.Provider>
-      <div id="overlay"></div>
+      <div id="overlay" onClick={() => closePopup()}></div>
     </div>
   );
 }
