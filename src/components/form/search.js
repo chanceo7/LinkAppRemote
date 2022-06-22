@@ -64,7 +64,7 @@ function Search(props) {
           onChange={(e) => handleSearch(e.target)}
         />
       </form>
-      <div ref={hide_cont} className="conct-cont">
+      <div className="conct-cont">
         {contacts.map((item, index) => {
           return (
             <div

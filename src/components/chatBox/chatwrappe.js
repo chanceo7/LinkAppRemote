@@ -1,10 +1,11 @@
-import { render } from "@testing-library/react";
 import axios from "axios";
 import React, { useEffect, useState, useContext, useRef } from "react";
 import "../chatBox/chat.css";
 import userData from "../form/usecontexts";
 import Forward from "./forward";
-import coverMessage from "../../coverMessage.png";
+import coverMessage from "../../image/coverMessage.png";
+import emoji from "../../image/emoji.png";
+import Emoji from "../form/emoji/emoji";
 
 export default function Chatwrappe(props) {
   const info = useContext(userData);
@@ -131,6 +132,12 @@ export default function Chatwrappe(props) {
     props.deleteChat();
   };
 
+  const hide = (emoji) => {
+    let data = text;
+    data += emoji;
+    setText(data);
+  };
+
   return (
     <div className="chat">
       <Forward
@@ -166,6 +173,15 @@ export default function Chatwrappe(props) {
       <div className="text-container">{data}</div>
       <div className="chat-input-container">
         <form className="text-form" onSubmit={handleSubmit}>
+          <img
+            className="emoji-picture"
+            src={emoji}
+            alt="emoji"
+            onClick={() =>
+              (document.querySelector(".emoji-container").style.visibility =
+                "visible")
+            }
+          />
           <textarea
             className="text-input"
             type={"text"}
@@ -214,6 +230,7 @@ export default function Chatwrappe(props) {
       <div className="chatwrappe-cover">
         <img src={coverMessage} alt="coverMessage" />
       </div>
+      <Emoji insert={(emoji) => hide(emoji)} />
     </div>
   );
 }

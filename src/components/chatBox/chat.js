@@ -7,11 +7,14 @@ import userData from "../form/usecontexts";
 import Conversation from "./conversation";
 import Search from "../form/search";
 import Chatwrappe from "./chatwrappe";
+import Find from "../form/find/find";
+import Emoji from "../form/emoji/emoji";
 
 function Chat() {
   const info = useContext(userData);
   const [socket] = useState(() => io(":8080", { query: { id: info.user.id } }));
   const [conversation, setConversation] = useState([]);
+  const [allconversations, setAllconversations] = useState([]);
   const [nomber, setNomber] = useState(0);
   const [messages, setMessages] = useState([]);
   const [name, setName] = useState("");
@@ -37,7 +40,13 @@ function Chat() {
       .get(`http://localhost:8080/api/get/conv/${info.user.id}`)
       .then((res) => {
         console.log(res.data);
-        res.data ? setConversation(res.data) : setConversation([]);
+        if (res.data) {
+          setConversation(res.data);
+          setAllconversations(res.data);
+        } else {
+          setAllconversations([]);
+          setConversation([]);
+        }
         const conv_id = sessionStorage.getItem("conv_id");
         conv_id == "zzzz" &&
           sessionStorage.setItem("conv_id", res.data[0].conv_id);
@@ -110,6 +119,11 @@ function Chat() {
     toggle ? setToggle(false) : setToggle(true);
   };
 
+  const find = (results, len) => {
+    if (len == 0) return setConversation([...allconversations]);
+    setConversation([...results]);
+  };
+
   return (
     <div className="home">
       <div className="home-topbar">
@@ -132,6 +146,10 @@ function Chat() {
       <button onClick={insert}>insert</button>
       <div className="chatboxs">
         <div className="conversation-container">
+          <Find
+            conversation={conversation}
+            find={(results, length) => find(results, length)}
+          />
           {conversation.map((item, index) => {
             return (
               <Conversation

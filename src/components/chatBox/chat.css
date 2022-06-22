@@ -63,7 +63,7 @@
     height: 40px;
     padding: 5px;
     width: 520px;
-    font-size: 16pt;
+    font-size: 12pt;
     border: 2px solid rgb(218, 217, 217);
 }
 
@@ -364,7 +364,7 @@ b {
     font-size: 14pt;
     border:1px solid gray;
     outline: none;
-    font-family:'Handlee',cursive; ;
+    font-family:'Handlee',cursive; 
 
 }
 
@@ -641,4 +641,11 @@ b {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.emoji-picture{
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    border-radius: 35px;
 }

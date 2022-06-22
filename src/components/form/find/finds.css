@@ -1,0 +1,29 @@
+.find-search{
+    background-color: rgb(201, 201, 201);
+    border-radius:  5px;
+    padding: 10px;
+    position: relative;
+}
+
+.find-input{
+    border: none;
+    outline: none;
+    min-width: 200px;
+    border-radius: 5px;
+    padding: 2px 5px;
+    font-family:'Handlee',cursive;
+    font-weight: bolder;
+    font-size: 12pt;
+}
+
+.find-clear{
+    position: absolute;
+    right: 11px;
+    top:9px;
+    color: black;
+    font-size: 16pt;
+    font-family: sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    visibility: hidden;
+}

@@ -1,0 +1,50 @@
+
+.emoji-container{
+    position: absolute;
+    bottom: 60px;
+    width: 400px;
+    height: 300px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    overflow: auto;
+    visibility: hidden;
+    box-shadow: 2px 2px 2px 2px rgba(128, 128, 128, 0.349);
+    z-index: 1;
+}
+
+.emoji-container::-webkit-scrollbar{
+    width: 10px;
+    background-color: white;
+}
+
+.emoji-container::-webkit-scrollbar-button{
+    display: none;
+}
+.emoji-container::-webkit-scrollbar-thumb{
+    background-color: gray;
+    border-radius: 15px;
+}
+
+.title{
+    color: grey;
+    font-size: 16pt;
+    font-family: 'Handlee',cursive;
+
+}
+
+.emoji{
+    cursor: pointer;
+    font-size: 18pt;
+}
+
+.emoji-overlay{
+    position: fixed;
+    background-color: transparent;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: -2;
+}
+
