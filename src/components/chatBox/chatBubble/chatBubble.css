@@ -1,0 +1,94 @@
+.Leftbubble {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    position: relative;
+    padding: 2px 0px;
+}
+
+.Leftbubble-replied{
+    background-color: rgb(252, 252, 252);
+    border-left: 5px solid rgb(199, 130, 2);
+    color: rgb(97, 97, 97);
+    filter: blur(0.1px);
+    padding: 2px 5px;
+    border-radius:5px;
+    font-size: 12pt;
+    
+}
+
+.Leftbubble-text{
+    position: relative;
+    color: black;
+    border-radius: 5px;
+}
+
+.Leftbubble-reaction{
+   position: absolute;
+   bottom: -15px;
+   left:5px;
+   background-color: white;
+   padding: 0px 2px;
+   border-radius: 45%;
+   box-shadow: 0px 0px 2px 1px rgba(165, 165, 165, 0.692);
+}
+
+.Leftbubble-container{
+    background-color:rgba(194, 193, 193, 0.616);
+    color: rgba(114, 114, 114, 0.767);
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.margin-top{
+    margin-top: 16px;
+}
+
+.reaction-bar{
+    position: absolute;
+    width: 180px;
+    left: -5px;
+    top: -30px;
+    transition: all 0.2s ease-out;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 16pt; 
+    border-radius: 10px;
+    z-index: 5;
+    box-shadow: 0px 0px 2px 1px rgba(165, 165, 165, 0.692);
+    transform: scale(0);
+}
+
+
+.reaction-bar:before{
+    content: "";
+    left: 10px;
+    top:30px;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 6px solid white;
+    border-left: 7px solid transparent;
+    border-right:7px solid transparent;
+}
+
+.overlay-bubble{
+    z-index:1;
+    background-color: blue;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    visibility: hidden;
+}
+
+.Leftbubble-text-message {
+   background-color: red;
+   padding:5px ;
+}

@@ -6,6 +6,7 @@ import Forward from "./forward";
 import coverMessage from "../../image/coverMessage.png";
 import emoji from "../../image/emoji.png";
 import Emoji from "../form/emoji/emoji";
+import LeftBubble from "./chatBubble/chatBubble";
 
 export default function Chatwrappe(props) {
   const info = useContext(userData);
@@ -17,14 +18,18 @@ export default function Chatwrappe(props) {
   const detail = useRef();
   const [render, setRender] = useState([]);
 
-  function text_faSliders(texts) {
+  function text_faSliders(message_info) {
     const box = [];
-    for (let i = 0; i < texts.length; i++) {
-      texts[i].from == "other"
+    for (let i = 0; i < message_info.length; i++) {
+      message_info[i].from == "other"
         ? box.push(
-            <div key={i} className="other">
-              <div>{texts[i].message}</div>
-            </div>
+            <LeftBubble
+              text={message_info[i].message}
+              actual={message_info[i - 1] ? message_info[i - 1].from : ""}
+              prev={message_info[i].from}
+              reaction={"🍉"}
+              reply={"this is the same reason"}
+            />
           )
         : box.push(
             <div key={i} className="me">
@@ -32,18 +37,18 @@ export default function Chatwrappe(props) {
                 <div className="me-actions">
                   <img
                     onClick={() => {
-                      forward(texts[i].message);
+                      forward(message_info[i].message);
                     }}
                     src="https://th.bing.com/th/id/R.ccf12f5c262b2b519058da31788b63cf?rik=mP%2bRDuN7PYbpWA&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_93739.png&ehk=PqryfzeV9vZZXkeKlBWUlAfhbJAT%2f3uN4%2bn7C%2b4bRWc%3d&risl=&pid=ImgRaw&r=0"
                   />
                   <img
                     className="me-delete"
-                    onClick={() => deleteMsg(i, texts[i].id)}
+                    onClick={() => deleteMsg(i, message_info[i].id)}
                     src="https://cdn.onlinewebfonts.com/svg/img_117750.png"
                   />
                 </div>
                 <div onMouseEnter={(e) => hover(e)} className="me-text">
-                  {texts[i].message}
+                  {message_info[i].message}
                 </div>
               </div>
             </div>

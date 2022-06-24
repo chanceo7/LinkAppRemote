@@ -9,6 +9,7 @@ import Search from "../form/search";
 import Chatwrappe from "./chatwrappe";
 import Find from "../form/find/find";
 import Emoji from "../form/emoji/emoji";
+import LeftBubble from "./chatBubble/chatBubble";
 
 function Chat() {
   const info = useContext(userData);
