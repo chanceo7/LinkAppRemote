@@ -9,7 +9,7 @@ import Search from "../form/search";
 import Chatwrappe from "./chatwrappe";
 import Find from "../form/find/find";
 import Emoji from "../form/emoji/emoji";
-import LeftBubble from "./chatBubble/chatBubble";
+
 
 function Chat() {
   const info = useContext(userData);
@@ -35,6 +35,32 @@ function Chat() {
     setNomber(nomber + 1);
     console.log(conversation);
   };
+
+
+
+
+
+  const reactions=(emoji,index)=>{
+      const data = {
+        id:messages[index].id,
+        reaction:emoji
+      }
+      axios.post("http://localhost:8080/api/post/reaction", data)
+      .then(res=>{
+        const current=messages
+        current[index].reaction=emoji
+        setMessages([...current])
+      })
+  }
+
+  const deleteReaction=(index)=>{
+    const id=messages[index].id
+    axios.delete(`http://localhost:8080/api/delete/reaction/${id}`).then(res=>{
+       const current = messages;
+       current[index].reaction ="";
+       setMessages([...current]);
+    })
+  }
 
   const getConversation = () => {
     axios
@@ -177,6 +203,8 @@ function Chat() {
           })}
         </div>
         <Chatwrappe
+          deleteReaction={(index)=>deleteReaction(index)}
+          reactions={(emoji,index)=>reactions(emoji,index)}
           name={name}
           toggleDetails={() => toggleDetails()}
           toggle={toggle}

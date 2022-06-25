@@ -1,7 +1,8 @@
 .Leftbubble {
     display: flex;
-    align-items: flex-end;
-    gap: 10px;
+    align-items: flex-start;
+    gap: 5px;
+    justify-content:;
     position: relative;
     padding: 2px 0px;
 }
@@ -47,7 +48,7 @@
 
 .reaction-bar{
     position: absolute;
-    width: 180px;
+    width: fit-content;
     left: -5px;
     top: -30px;
     transition: all 0.2s ease-out;
@@ -79,7 +80,7 @@
 
 .overlay-bubble{
     z-index:1;
-    background-color: blue;
+    background-color: transparent;
     position: absolute;
     top: 0px;
     left: 0px;
@@ -89,6 +90,23 @@
 }
 
 .Leftbubble-text-message {
-   background-color: red;
-   padding:5px ;
+   background-color: transparent;
+   padding:5px;
+}
+
+.bubble-actions img{
+    margin: 3px;
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+}
+
+
+.bubble-actions{
+    visibility: hidden;
+}
+
+.frame{
+    display: flex;
+    align-items: flex-start;
 }

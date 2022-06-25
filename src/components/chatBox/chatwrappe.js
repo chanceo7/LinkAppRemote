@@ -8,11 +8,14 @@ import emoji from "../../image/emoji.png";
 import Emoji from "../form/emoji/emoji";
 import LeftBubble from "./chatBubble/chatBubble";
 
+
+
 export default function Chatwrappe(props) {
   const info = useContext(userData);
   const [text, setText] = useState("");
   const [data, setData] = useState([]);
   const [toFoward, setToFoward] = useState("");
+  const [replyMessage, setReplyMessage] = useState("");
   const texts = props.messages;
   const socket = props.socket;
   const detail = useRef();
@@ -24,32 +27,25 @@ export default function Chatwrappe(props) {
       message_info[i].from == "other"
         ? box.push(
             <LeftBubble
+              deleteReaction={(index) => props.deleteReaction(index)}
+              key={i + "lb"}
+              select={i + "lb"}
               text={message_info[i].message}
-              actual={message_info[i - 1] ? message_info[i - 1].from : ""}
-              prev={message_info[i].from}
-              reaction={"🍉"}
-              reply={"this is the same reason"}
+              prevReaction={
+                message_info[i - 1] ? message_info[i - 1].reaction : ""
+              }
+              reaction={message_info[i].reaction}
+              reply={message_info[i].reply}
+              reactions={(emoji, index) => props.reactions(emoji, index)}
+              index={i}
+              replying={(message) => replying(message)}
             />
           )
         : box.push(
             <div key={i} className="me">
-              <div className="me-container" onMouseLeave={(e) => hoverOut(e)}>
-                <div className="me-actions">
-                  <img
-                    onClick={() => {
-                      forward(message_info[i].message);
-                    }}
-                    src="https://th.bing.com/th/id/R.ccf12f5c262b2b519058da31788b63cf?rik=mP%2bRDuN7PYbpWA&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_93739.png&ehk=PqryfzeV9vZZXkeKlBWUlAfhbJAT%2f3uN4%2bn7C%2b4bRWc%3d&risl=&pid=ImgRaw&r=0"
-                  />
-                  <img
-                    className="me-delete"
-                    onClick={() => deleteMsg(i, message_info[i].id)}
-                    src="https://cdn.onlinewebfonts.com/svg/img_117750.png"
-                  />
-                </div>
-                <div onMouseEnter={(e) => hover(e)} className="me-text">
-                  {message_info[i].message}
-                </div>
+              <div className="me-container">
+                <div className="bubble-actions"></div>
+                <div className="me-text">{message_info[i].message}</div>
               </div>
             </div>
           );
@@ -66,20 +62,8 @@ export default function Chatwrappe(props) {
     overlay.transform = " translate(-50%,-50%) scale(2)";
   };
 
-  const hover = (e) => {
-    const element = e.target.parentNode.querySelector(".me-actions");
-    element.style.visibility = "visible";
-  };
-  const hoverOut = (e) => {
-    const target = e.target.parentNode;
-    const element = e.target.parentNode.querySelector(".me-actions");
-    if (element) {
-      element.style.visibility = "hidden";
-    } else {
-      const div = target.parentNode.querySelector(".me-actions");
-      console.log("div", div);
-      div.style.visibility = "hidden";
-    }
+  const replying = (message) => {
+    setReplyMessage(message);
   };
 
   const deleteMsg = (index, id) => {
@@ -109,6 +93,7 @@ export default function Chatwrappe(props) {
     const data = {
       user_id: info.user.id,
       receiver_id: props.contact.id,
+      reply:replyMessage,
       message: text,
       from: "me",
       sender: {
@@ -124,6 +109,7 @@ export default function Chatwrappe(props) {
         socket.emit("send message", data);
         texts.push(data);
         setText("");
+        setReplyMessage("")
         text_faSliders(texts);
       });
   };
@@ -177,6 +163,15 @@ export default function Chatwrappe(props) {
       </div>
       <div className="text-container">{data}</div>
       <div className="chat-input-container">
+        {replyMessage && (
+          <div className="chat-reply ">
+            <div className="chat-reply-topbar">
+              <p id="replying">Replying to</p>
+              <p id="reply-close" onClick={()=>{setReplyMessage("")}}>X</p>
+            </div>
+            <div className="chat-reply-message">{replyMessage}</div>
+          </div>
+        )}
         <form className="text-form" onSubmit={handleSubmit}>
           <img
             className="emoji-picture"
