@@ -1,70 +1,39 @@
 .text-container {
     background-color: rgb(255, 255, 255);
     margin-top: 10px;
-    max-width: 600px;
-    max-height: 600px;
-    min-height: 600px;
+    width: 100%;
     overflow: auto;
-    padding:10px;
-}
-
-.me {
-    color: white;
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.me-actions{
-    display: flex;
-    justify-content: center;
-    gap:10px;
-    align-items: center;
-    visibility: hidden;
-}
-
-.me-actions img{
-    width: 40px;
-    height: 40px;
-}
-
-.me-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+    padding:10px 10px 20px 10px;
+    box-sizing: border-box;
+    flex:1 1 auto
 }
 
 
-.other {
-    display: flex;
-    justify-content: flex-start;
-    
+.text-container::-webkit-scrollbar {
+    width:5px;
+}
+.text-container::-webkit-scrollbar-thumb{
+    background-color: gray;
 }
 
-.me-text {
-    background-color: rgb(23, 166, 185);
-    padding: 5px;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    margin-right: 5px;
-}
-
-.other div {
-    background-color: rgb(240, 238, 238);
-    padding:  5px;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    margin-left: 5px;
-}
 
 .text-input {
-    height: 40px;
-    padding: 5px;
+    border-radius: 10px;
+    outline: none;
     width: 520px;
-    font-size: 12pt;
+    height:2.5rem;
+    resize: none;
+    font-size: 1.3rem;
+    padding: 3px;
     border: 2px solid rgb(218, 217, 217);
+
+}
+
+.text-input::-webkit-scrollbar{
+    width: 5px;
+}
+.text-input::-webkit-scrollbar-thumb{
+    background-color: gray;
 }
 
 .send {
@@ -85,13 +54,14 @@
     flex-direction: column;
     gap: 10px;
     padding: 5px;
-    min-height:600px;
+    height:700px;
     min-width: 200px;
     background-color: white;
     color: white;
     border-radius: 10px 0px 0px 10px;
     border: 1px solid rgba(128, 128, 128, 0.712); 
     padding-top: 5px; 
+    overflow:  auto;
 }
 
 #conversation{
@@ -125,7 +95,6 @@
     align-items: center;
     border-radius: 50%;
     width: 35px;
-    height: 35px;
     color: white;
     background-color: rgb(84, 177, 42);
 }
@@ -393,6 +362,11 @@ b {
     border: 1px solid grey;
     border-radius: 0px 10px 10px 0px;
     position: relative;
+    height: 700px;
+    min-width: 400px;
+    max-width: 600px;
+    display: flex;
+    flex-flow: column;
 }
 
 .chat-profile-user{
@@ -403,6 +377,7 @@ b {
 
 .chat-profile{
     padding: 5px;
+    flex:0 1 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -427,16 +402,15 @@ b {
 }
 
 .chat-input-container{
-    background-color: rgba(175, 174, 174, 0.185);
+    background-color: rgba(204, 204, 204, 0.185);
     padding: 5px;
-
-    position: relative;
 }
 
 .text-form{
     display: flex;
     align-items: center;
     gap: 5px;
+    padding:10px;
 }
 
 .names{
@@ -669,10 +643,9 @@ b {
 
 .chat-reply{
     max-height: 100px;
-    left: 0;
-    right: 0;
-    top: -60px;
-    padding: 5px;
-    background-color: rgba(233, 233, 233, 0.986);
-    position: absolute;
+    overflow-wrap: break-word;
+    width: 100%;
+    background-color: transparent;
+    overflow: hidden;
 }
+

@@ -3,12 +3,15 @@ import React, { useState, useRef } from "react";
 import "../chatBubble/chatBubble.css";
 import treeDot_icon from '../../../image/treeDot_icon.png'
 import reply_icon from '../../../image/reply_icon.png'
-function LeftBubble(props) {
-  
-  
+
+
+
+
+function RightBubble(props) {
+
   const popReaction = (e) => {
     document.querySelector(".overlay-bubble").style.visibility = "visible";
-    const target=e.target.parentNode.querySelector(".reaction-bar")
+    const target=e.target.parentNode.querySelector(".Right-reaction-bar")
     target.style.transform="scale(1)"
   };
   
@@ -35,25 +38,29 @@ function LeftBubble(props) {
    const first = document.querySelectorAll(".bubble-actions");
    first[props.index].style.visibility='visible';
    
-     }
+   }
 
-     const onLeave = (e) => { 
-     const first = document.querySelectorAll(".bubble-actions");
-     first[props.index].style.visibility='hidden';
-      }
-  
+    const onLeave = (e) => { 
+        const first = document.querySelectorAll(".bubble-actions");
+        first[props.index].style.visibility='hidden';
+    }
+
     const reply=(message)=>{
        props.replying(message)
     }  
 
   return (
     <div>
-      <div  className={props.prevReaction ? "Leftbubble margin-top" : "Leftbubble"}>  
+      <div  className={props.prevReaction ? "Rightbubble margin-top" : "Rightbubble"}>  
         <div className="frame" onMouseLeave={(e) => onLeave(e)}>
-              <div className="Leftbubble-container" onMouseEnter={(e) => onhover(e)}>
-                    {props.reply && ( <div className="Leftbubble-replied">{props.reply}</div> )}
-                    <div className="Leftbubble-text">
-                        <div className="reaction-bar">
+              <div className="bubble-actions">
+                   <img src={reply_icon} alt="actions" onClick={()=>{reply(props.text)}} />
+                   <img src={treeDot_icon} alt="replay" onClick={()=>{props.forward(props.text,props.message_id)}}/>
+              </div>
+              <div className="Rightbubble-container" onMouseEnter={(e) => onhover(e)}>
+                    {props.reply && ( <div className="Rightbubble-replied">{props.reply}</div> )}
+                    <div className="Rightbubble-text">
+                        <div className="Right-reaction-bar">
                             <div onClick={(e) => { react(e)}} className="" > {"😀"}</div>
                             <div onClick={(e) => { react(e)}} className="" > {"😂"}</div>
                             <div onClick={(e) => { react(e)}} className="" > {"❤️"}</div>
@@ -63,11 +70,7 @@ function LeftBubble(props) {
                         </div>  
                         <div className="Leftbubble-text-message" onClick={(e) => popReaction(e)}>{props.text}</div>
                     </div>
-                    {props.reaction && (  <div className="Leftbubble-reaction" onClick={() => props.deleteReaction(props.index)}> {props.reaction}</div> )}  
-              </div>
-              <div className="bubble-actions">
-                  <img src={reply_icon} alt="actions" onClick={()=>{reply(props.text)}} />
-                  <img src={treeDot_icon} alt="replay" onClick={()=>{props.forward(props.text,props.message_id)}}/>
+                    {props.reaction && (  <div className="Rightbubble-reaction" onClick={() => props.deleteReaction(props.index)}> {props.reaction}</div> )}  
               </div>
         </div>
       </div>
@@ -76,4 +79,4 @@ function LeftBubble(props) {
   );
 }
 
-export default LeftBubble;
+export default RightBubble

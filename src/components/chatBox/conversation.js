@@ -18,11 +18,7 @@ function Conversation(props) {
   };
 
   return (
-    <div
-      onClick={(e) => {
-        clearNotification(e);
-      }}
-    >
+    <div onClick={(e) => {clearNotification(e);}} >
       <div id="conversation" onClick={props.click}>
         <img
           className="pro-img"

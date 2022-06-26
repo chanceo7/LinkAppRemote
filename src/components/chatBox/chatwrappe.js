@@ -7,6 +7,7 @@ import coverMessage from "../../image/coverMessage.png";
 import emoji from "../../image/emoji.png";
 import Emoji from "../form/emoji/emoji";
 import LeftBubble from "./chatBubble/chatBubble";
+import RightBubble from "./chatBubble/RightBubble";
 
 
 
@@ -14,7 +15,7 @@ export default function Chatwrappe(props) {
   const info = useContext(userData);
   const [text, setText] = useState("");
   const [data, setData] = useState([]);
-  const [toFoward, setToFoward] = useState("");
+  const [toFoward, setToFoward] = useState({});
   const [replyMessage, setReplyMessage] = useState("");
   const texts = props.messages;
   const socket = props.socket;
@@ -39,27 +40,40 @@ export default function Chatwrappe(props) {
               reactions={(emoji, index) => props.reactions(emoji, index)}
               index={i}
               replying={(message) => replying(message)}
+              message_id={message_info[i].id}
+              forward={(msg,msg_id)=>{forward(msg,msg_id)}}
             />
           )
         : box.push(
-            <div key={i} className="me">
-              <div className="me-container">
-                <div className="bubble-actions"></div>
-                <div className="me-text">{message_info[i].message}</div>
-              </div>
-            </div>
+          <RightBubble
+              deleteReaction={(index) => props.deleteReaction(index)}
+              key={i + "lb"}
+              select={i + "lb"}
+              text={message_info[i].message}
+              prevReaction={
+                message_info[i - 1] ? message_info[i - 1].reaction : ""
+              }
+              reaction={message_info[i].reaction}
+              reply={message_info[i].reply}
+              reactions={(emoji, index) => props.reactions(emoji, index)}
+              index={i}
+              replying={(message) => replying(message)}
+              message_id={message_info[i].id}
+              forward={(msg,msg_id)=>{forward(msg,msg_id)}}
+        />
           );
     }
     setData(box);
   }
 
-  const forward = (msg) => {
+  const forward = (msg,msg_id) => {
     setRender([...render, "render"]);
-    setToFoward(msg);
+    setToFoward({msg:msg,msg_id:msg_id });
     const popup = document.querySelector(".top").style;
     const overlay = document.querySelector("#overlay").style;
     popup.transform = " translate(-50%,-50%) scale(1)";
     overlay.transform = " translate(-50%,-50%) scale(2)";
+    console.log("message :"+msg, "id :"+msg_id)
   };
 
   const replying = (message) => {
@@ -109,6 +123,8 @@ export default function Chatwrappe(props) {
         socket.emit("send message", data);
         texts.push(data);
         setText("");
+        const textarea=document.querySelector('.text-input')
+        textarea.style.height="2.5rem"
         setReplyMessage("")
         text_faSliders(texts);
       });
@@ -129,6 +145,22 @@ export default function Chatwrappe(props) {
     setText(data);
   };
 
+  const handleText = (el) => { 
+    setText(el.value);
+    if(el.value.length==42){
+      const textarea=document.querySelector('.text-input')
+      textarea.style.height="4rem"
+    }
+    if(el.value.length==80){
+      const textarea=document.querySelector('.text-input')
+      textarea.style.height="5.1rem"
+    }
+    if(el.value.length==41){
+      const textarea=document.querySelector('.text-input')
+      textarea.style.height="2.5rem"
+     }
+  }
+
   return (
     <div className="chat">
       <Forward
@@ -146,19 +178,8 @@ export default function Chatwrappe(props) {
           />
           <h2>{props.name}</h2>
         </div>
-        <div
-          className="receiver-info"
-          onClick={() => {
-            toggleDetails();
-          }}
-        >
-          <h3
-            className={
-              props.toggle == true ? "action-desactive" : "action-active"
-            }
-          >
-            i
-          </h3>
+        <div className="receiver-info"onClick={() => { toggleDetails()}}   >
+          <h3 className={ props.toggle == true ? "action-desactive" : "action-active" }>i</h3>
         </div>
       </div>
       <div className="text-container">{data}</div>
@@ -172,7 +193,7 @@ export default function Chatwrappe(props) {
             <div className="chat-reply-message">{replyMessage}</div>
           </div>
         )}
-        <form className="text-form" onSubmit={handleSubmit}>
+        <div className="text-form"> 
           <img
             className="emoji-picture"
             src={emoji}
@@ -186,8 +207,9 @@ export default function Chatwrappe(props) {
             className="text-input"
             type={"text"}
             value={text}
+            maxLength={325}
             onChange={(e) => {
-              setText(e.target.value);
+              handleText(e.target)
             }}
           />
           <svg
@@ -201,7 +223,7 @@ export default function Chatwrappe(props) {
               d="M 0 0 L 70 25 L 0 50 L 20 25"
             />
           </svg>
-        </form>
+        </div>
       </div>
       <div ref={detail} className="chat-action" id={props.toggle ? "hide" : ""}>
         <div className="receiver-type">

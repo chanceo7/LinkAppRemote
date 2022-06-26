@@ -78,9 +78,10 @@ function Forward(props) {
     if (disable) return;
     closePopup();
     const data = {
+      related:props.msg.msg_id,
       user_id: info.user.id,
       users: contact,
-      message: props.msg,
+      message: props.msg.msg,
       from: "me",
     };
     axios

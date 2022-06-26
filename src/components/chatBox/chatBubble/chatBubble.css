@@ -2,7 +2,15 @@
     display: flex;
     align-items: flex-start;
     gap: 5px;
-    justify-content:;
+    position: relative;
+    padding: 2px 0px;
+}
+
+.Rightbubble  {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 5px;
     position: relative;
     padding: 2px 0px;
 }
@@ -15,12 +23,30 @@
     padding: 2px 5px;
     border-radius:5px;
     font-size: 12pt;
-    
+    max-height: 85px;
+    overflow: hidden;
+}
+
+.Rightbubble-replied{
+    background-color: rgb(252, 252, 252);
+    border-left: 5px solid rgb(102, 19, 211);
+    color: rgb(97, 97, 97);
+    filter: blur(0.1px);
+    padding: 2px 5px;
+    border-radius:5px;
+    font-size: 12pt;
+    max-height: 85px;
+    overflow: hidden;
 }
 
 .Leftbubble-text{
     position: relative;
     color: black;
+    border-radius: 5px;
+}
+.Rightbubble-text{
+    position: relative;
+    color: white;
     border-radius: 5px;
 }
 
@@ -34,10 +60,31 @@
    box-shadow: 0px 0px 2px 1px rgba(165, 165, 165, 0.692);
 }
 
+.Rightbubble-reaction{
+   position: absolute;
+   bottom: -15px;
+   right:5px;
+   background-color: white;
+   padding: 0px 2px;
+   border-radius: 45%;
+   box-shadow: 0px 0px 2px 1px rgba(165, 165, 165, 0.692);
+}
+
 .Leftbubble-container{
     background-color:rgba(194, 193, 193, 0.616);
     color: rgba(114, 114, 114, 0.767);
     border-radius: 5px;
+    max-width: 200px;
+    overflow-wrap:break-word;
+    padding: 5px;
+    cursor: pointer;
+}
+.Rightbubble-container{
+    background-color: rgb(23, 166, 185);
+    color: white;
+    border-radius: 5px;
+    max-width: 200px;
+    overflow-wrap:break-word;
     padding: 5px;
     cursor: pointer;
 }
@@ -60,7 +107,7 @@
     gap: 10px;
     font-size: 16pt; 
     border-radius: 10px;
-    z-index: 5;
+    z-index: 10;
     box-shadow: 0px 0px 2px 1px rgba(165, 165, 165, 0.692);
     transform: scale(0);
 }
@@ -77,6 +124,38 @@
     border-left: 7px solid transparent;
     border-right:7px solid transparent;
 }
+
+.Right-reaction-bar{
+    position: absolute;
+    width: fit-content;
+    right: 0px;
+    top: -30px;
+    transition: all 0.2s ease-out;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 16pt; 
+    border-radius: 10px;
+    z-index: 10;
+    box-shadow: 0px 0px 2px 1px rgba(165, 165, 165, 0.692);
+    transform: scale(0);
+}
+
+.Right-reaction-bar:before{
+    content: "";
+    position: absolute;
+    left: 200px;
+    top:30px;
+    width: 0;
+    height: 0;
+    border-top: 6px solid white;
+    border-left: 7px solid transparent;
+    border-right:7px solid transparent;
+}
+
 
 .overlay-bubble{
     z-index:1;
