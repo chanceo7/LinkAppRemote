@@ -21,6 +21,9 @@ export default function Chatwrappe(props) {
   const socket = props.socket;
   const detail = useRef();
   const [render, setRender] = useState([]);
+  
+  
+
 
   function text_faSliders(message_info) {
     const box = [];
@@ -95,6 +98,8 @@ export default function Chatwrappe(props) {
 
   useEffect(() => {
     text_faSliders(texts);
+    return(()=>{
+    })
   }, [props.messages]);
 
   const handleSubmit = (e) => {
@@ -147,19 +152,21 @@ export default function Chatwrappe(props) {
 
   const handleText = (el) => { 
     setText(el.value);
-    if(el.value.length==42){
+    if(el.value.length>41 && el.value.length<80){
       const textarea=document.querySelector('.text-input')
       textarea.style.height="4rem"
     }
-    if(el.value.length==80){
+    if(el.value.length>=80){
       const textarea=document.querySelector('.text-input')
       textarea.style.height="5.1rem"
     }
-    if(el.value.length==41){
+    if(el.value.length<=41){
       const textarea=document.querySelector('.text-input')
       textarea.style.height="2.5rem"
      }
   }
+
+
 
   return (
     <div className="chat">

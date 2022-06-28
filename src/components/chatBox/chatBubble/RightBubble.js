@@ -10,18 +10,15 @@ import reply_icon from '../../../image/reply_icon.png'
 function RightBubble(props) {
 
   const popReaction = (e) => {
-    document.querySelector(".overlay-bubble").style.visibility = "visible";
     const target=e.target.parentNode.querySelector(".Right-reaction-bar")
     target.style.transform="scale(1)"
   };
   
   const closeReaction = () => {
     const allRightReaction_bar=document.querySelectorAll('.Right-reaction-bar')
-    document.querySelector(".overlay-bubble").style.visibility = "hidden";
     allRightReaction_bar.forEach(el=>el.style.transform="scale(0)")
 
     const allReaction_bar=document.querySelectorAll('.reaction-bar')
-    document.querySelector(".overlay-bubble").style.visibility = "hidden";
     allReaction_bar.forEach(el=>el.style.transform="scale(0)")
   };
 
@@ -74,7 +71,6 @@ function RightBubble(props) {
               </div>
         </div>
       </div>
-      <div className="overlay-bubble" onClick={(e) => closeReaction(e)}></div>
     </div>
   );
 }

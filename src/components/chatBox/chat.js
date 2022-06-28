@@ -37,8 +37,7 @@ function Chat() {
   };
 
 
-
-
+  
 
   const reactions=(emoji,index)=>{
       const data = {
@@ -111,7 +110,16 @@ function Chat() {
     let receiver = sessionStorage.getItem("receiver");
     received && getMessages(receiver, info.user.id);
     getConversation();
-  }, [render]);
+
+    const chat = document.querySelector('.chat')
+    chat.addEventListener('click',(e)=>{
+      const reactions = document.querySelectorAll('.reaction-bar')
+      const Rightreactions = document.querySelectorAll('.Right-reaction-bar')
+      Rightreactions && Rightreactions.forEach(el=> el.style.transform="scale(0)")
+      reactions && reactions.forEach(el=> el.style.transform='scale(0)')
+    })
+   
+}, [render]);
 
   let received = [];
 

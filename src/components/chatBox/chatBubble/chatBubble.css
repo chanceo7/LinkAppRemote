@@ -157,16 +157,6 @@
 }
 
 
-.overlay-bubble{
-    z-index:1;
-    background-color: transparent;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    visibility: hidden;
-}
 
 .Leftbubble-text-message {
    background-color: transparent;

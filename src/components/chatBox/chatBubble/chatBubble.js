@@ -22,6 +22,8 @@ function LeftBubble(props) {
     allReaction_bar.forEach(el=>el.style.transform="scale(0)")
   };
 
+  
+
   const react = (e) => { 
      e.target.parentNode.style.transform="scale(0)"
      document.querySelector(".overlay-bubble").style.visibility = "hidden";
