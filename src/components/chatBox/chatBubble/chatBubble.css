@@ -95,23 +95,27 @@
 
 .reaction-bar{
     position: absolute;
-    width: fit-content;
+    overflow: hidden;
+    width: 0;
     left: -5px;
     top: -30px;
-    transition: all 0.2s ease-out;
     background-color: white;
     display: flex;
     align-items: center;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+    justify-content: flex-start;
+    gap: 5px;
     font-size: 16pt; 
     border-radius: 10px;
     z-index: 10;
-    box-shadow: 0px 0px 2px 1px rgba(165, 165, 165, 0.692);
-    transform: scale(0);
+    transition: width 0.1s linear, padding 0.3s ,opacity 0.3s;
 }
 
+
+.reaction-bar:hover .suprised  {
+  animation-name:bounce ;
+  animation-duration: 7s;
+  animation-delay: 0.12s ;
+}
 
 .reaction-bar:before{
     content: "";
@@ -120,28 +124,26 @@
     position: absolute;
     width: 0;
     height: 0;
-    border-top: 6px solid white;
+    border-top: 6px solid transparent;
     border-left: 7px solid transparent;
     border-right:7px solid transparent;
 }
 
 .Right-reaction-bar{
     position: absolute;
-    width: fit-content;
+    overflow: hidden;
+    width: 0px;
     right: 0px;
     top: -30px;
-    transition: all 0.2s ease-out;
     background-color: white;
     display: flex;
     align-items: center;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+    justify-content: flex-end;
+    gap: 5px;
     font-size: 16pt; 
     border-radius: 10px;
     z-index: 10;
-    box-shadow: 0px 0px 2px 1px rgba(165, 165, 165, 0.692);
-    transform: scale(0);
+    transition: width 0.1s linear, padding 0.3s ,opacity 0.3s;
 }
 
 .Right-reaction-bar:before{
@@ -179,3 +181,14 @@
     display: flex;
     align-items: flex-start;
 }
+
+.reaction{
+    position: relative;
+}
+
+@keyframes bounce{
+    0%{top: -10px}
+    80%{top: 2px}
+    100%{top:0px}
+  }
+

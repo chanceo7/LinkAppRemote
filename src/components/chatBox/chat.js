@@ -74,8 +74,7 @@ function Chat() {
           setConversation([]);
         }
         const conv_id = sessionStorage.getItem("conv_id");
-        conv_id == "zzzz" &&
-          sessionStorage.setItem("conv_id", res.data[0].conv_id);
+        conv_id == "zzzz" && sessionStorage.setItem("conv_id", res.data[0].conv_id);       
       });
   };
 
@@ -115,8 +114,14 @@ function Chat() {
     chat.addEventListener('click',(e)=>{
       const reactions = document.querySelectorAll('.reaction-bar')
       const Rightreactions = document.querySelectorAll('.Right-reaction-bar')
-      Rightreactions && Rightreactions.forEach(el=> el.style.transform="scale(0)")
-      reactions && reactions.forEach(el=> el.style.transform='scale(0)')
+      Rightreactions && Rightreactions.forEach(el=> {
+        el.style.width="0px"
+        el.style.boxShadow="none"
+      })
+      reactions && reactions.forEach(el=>{ 
+        el.style.width="0px"
+        el.style.boxShadow="none"
+      })
     })
    
 }, [render]);
@@ -129,9 +134,12 @@ function Chat() {
   });
 
   socket.on("fowarded received", (rendr) => {
-    console.log("forward");
     setRender([...render, "render"]);
   });
+
+  socket.on("typing receiver",(data)=>{
+      
+  })
 
   // socket ----------------------------------
 

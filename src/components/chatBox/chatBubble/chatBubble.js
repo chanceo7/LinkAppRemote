@@ -7,9 +7,17 @@ function LeftBubble(props) {
   
   
   const popReaction = (e) => {
-    document.querySelector(".overlay-bubble").style.visibility = "visible";
     const target=e.target.parentNode.querySelector(".reaction-bar")
-    target.style.transform="scale(1)"
+    const allAnimation=target.querySelectorAll('.reaction')
+    let delay=0.03
+    allAnimation.forEach(el=>{
+      el.style.animationDuration="0.3s";
+      el.style.animationDelay=`${delay}s`
+      el.style.animationName="bounce";
+      delay+=0.03;
+    })
+    target.style.width="203px"
+    target.style.boxShadow=" 0px 0px 2px 1px rgba(165, 165, 165, 0.692)"
   };
   
   const closeReaction = () => {
@@ -25,8 +33,8 @@ function LeftBubble(props) {
   
 
   const react = (e) => { 
-     e.target.parentNode.style.transform="scale(0)"
-     document.querySelector(".overlay-bubble").style.visibility = "hidden";
+     e.target.parentNode.style.width="203px"
+     return
      console.log(e.target.innerHTML)
      props.reactions(e.target.innerHTML, props.index)
 
@@ -56,12 +64,12 @@ function LeftBubble(props) {
                     {props.reply && ( <div className="Leftbubble-replied">{props.reply}</div> )}
                     <div className="Leftbubble-text">
                         <div className="reaction-bar">
-                            <div onClick={(e) => { react(e)}} className="" > {"😀"}</div>
-                            <div onClick={(e) => { react(e)}} className="" > {"😂"}</div>
-                            <div onClick={(e) => { react(e)}} className="" > {"❤️"}</div>
-                            <div onClick={(e) => { react(e)}} className="" > {"🙏"}</div>
-                            <div onClick={(e) => { react(e)}} className="" > {"👍"}</div>
-                            <div onClick={(e) => { react(e)}} className="" > {"😲"}</div>
+                            <div onClick={(e) => { react(e)}} className="reaction" onAnimationEnd={(e)=>e.target.style.animationName="none"} > {"😀"}</div>
+                            <div onClick={(e) => { react(e)}} className="reaction" onAnimationEnd={(e)=>e.target.style.animationName="none"}> {"😂"}</div>
+                            <div onClick={(e) => { react(e)}} className="reaction" onAnimationEnd={(e)=>e.target.style.animationName="none"}> {"❤️"}</div>
+                            <div onClick={(e) => { react(e)}} className="reaction" onAnimationEnd={(e)=>e.target.style.animationName="none"}> {"🙏"}</div>
+                            <div onClick={(e) => { react(e)}} className="reaction" onAnimationEnd={(e)=>e.target.style.animationName="none"}> {"👍"}</div>
+                            <div onClick={(e) => { react(e)}} className="reaction" onAnimationEnd={(e)=>e.target.style.animationName="none"}> {"😲"}</div>
                         </div>  
                         <div className="Leftbubble-text-message" onClick={(e) => popReaction(e)}>{props.text}</div>
                     </div>

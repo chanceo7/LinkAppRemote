@@ -9,7 +9,7 @@ import Checkbox from "./components/form/checkbox";
 import Register from "./components/form/register";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import userData from "./components/form/usecontexts";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 function App() {
   const [user, setUser] = useState({
     first_name: "",
@@ -21,6 +21,12 @@ function App() {
     popup.transform = " translate(-50%,-50%) scale(0)";
     overlay.transform = " translate(-50%,-50%) scale(0)";
   };
+
+
+  useEffect(()=>{
+   window.addEventListener("load",()=>console.log("focused"))
+   window.addEventListener("blur",()=>console.log("focused out"))
+  })
 
   return (
     <div className="App">

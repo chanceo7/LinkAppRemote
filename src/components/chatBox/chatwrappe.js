@@ -8,7 +8,7 @@ import emoji from "../../image/emoji.png";
 import Emoji from "../form/emoji/emoji";
 import LeftBubble from "./chatBubble/chatBubble";
 import RightBubble from "./chatBubble/RightBubble";
-
+import Typing from "../form/typing/typing";
 
 
 export default function Chatwrappe(props) {
@@ -21,9 +21,9 @@ export default function Chatwrappe(props) {
   const socket = props.socket;
   const detail = useRef();
   const [render, setRender] = useState([]);
+  const scroll = useRef()
   
   
-
 
   function text_faSliders(message_info) {
     const box = [];
@@ -92,13 +92,47 @@ export default function Chatwrappe(props) {
       });
   };
 
+
+  const change = () => {
+
+  }
+
+
+  socket.on("typing receiver",(data)=>{
+     console.log(data.typer, sessionStorage.getItem('receiver'))
+    const receiver=sessionStorage.getItem('receiver')
+    if (data.typer != receiver) return
+     const typing =document.querySelector('.typing-container')
+     typing.style.visibility="visible"   
+
+     setTimeout(() => {
+      typing.style.visibility="hidden" 
+     }, 7000);
+  })
+  
+
+  
+
+
   const clearNotif = () => {
     props.clear();
   };
 
   useEffect(() => {
+    const chatScroll=document.querySelector(".text-container")
+    console.log(chatScroll.scrollTop+558, chatScroll.scrollHeight)
+    if(Math.round(chatScroll.scrollTop+chatScroll.clientHeight)==chatScroll.scrollHeight) {
+      setTimeout(() => {
+        const chatScroll=document.querySelector(".text-container")
+        chatScroll.scrollTop=chatScroll.scrollHeight;
+        console.log(chatScroll.scrollHeight)
+      }, 20);
+    }
+    const typing =document.querySelector('.typing-container')
+    typing.style.visibility="hidden" 
     text_faSliders(texts);
     return(()=>{
+
     })
   }, [props.messages]);
 
@@ -164,9 +198,11 @@ export default function Chatwrappe(props) {
       const textarea=document.querySelector('.text-input')
       textarea.style.height="2.5rem"
      }
+
+    socket.emit("typing" ,{typer:info.user.id, receiver:props.contact.id})
   }
 
-
+  
 
   return (
     <div className="chat">
@@ -184,12 +220,13 @@ export default function Chatwrappe(props) {
             src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/07b59814110649.5627d8aa58212.jpg"
           />
           <h2>{props.name}</h2>
+        <Typing/>
         </div>
         <div className="receiver-info"onClick={() => { toggleDetails()}}   >
           <h3 className={ props.toggle == true ? "action-desactive" : "action-active" }>i</h3>
         </div>
       </div>
-      <div className="text-container">{data}</div>
+      <div ref={scroll} className="text-container">{data}</div>
       <div className="chat-input-container">
         {replyMessage && (
           <div className="chat-reply ">

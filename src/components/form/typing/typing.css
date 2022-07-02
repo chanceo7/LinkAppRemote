@@ -1,0 +1,61 @@
+*{
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+}
+
+:root{
+    --delay:2s;
+}
+
+
+.typing-container{
+    color:rgba(34, 34, 34, 0.808);
+    display: flex;
+    align-items: flex-end;
+    width: fit-content;
+    border: 1px solid transparent;
+    gap: 3px;
+    color: grey;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    visibility: hidden;
+}
+.typing{
+   color: rgba(34, 34, 34, 0.808);
+}
+
+
+.dot{
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: rgba(34, 34, 34, 0.719);
+    margin-bottom: 4px;
+    position: relative;
+    bottom: 0px;
+    animation-duration: 2.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease;
+    animation-name: wave;
+}
+
+.first{
+    animation-delay: var(--delay);
+}
+
+.second{
+    animation-delay: calc( 0.25s + var(--delay));
+}
+
+.third{
+    animation-delay:calc(0.5s + var(--delay)) ;
+}
+
+
+
+@keyframes wave{
+   0%{bottom: 0px;}
+   15%{bottom: 5px;}
+   30%{bottom: 0px;}
+   100%{bottom: 0px;}
+}

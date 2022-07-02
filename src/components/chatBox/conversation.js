@@ -4,6 +4,7 @@ import "../chatBox/chat.css";
 
 function Conversation(props) {
   const clearNotification = (e) => {
+  
     document.querySelector(".chatwrappe-cover").style.visibility = "hidden";
     if (props.notification > 0) {
       axios
@@ -13,12 +14,20 @@ function Conversation(props) {
         });
       return;
     }
-
     console.log("unchanged : " + 0);
   };
 
+  const scroll=()=>{
+    setTimeout(() => {
+      const chatScroll=document.querySelector(".text-container")
+      chatScroll.scrollTop=chatScroll.scrollHeight;
+      console.log("the : "+(Math.round(chatScroll.scrollTop+chatScroll.clientHeight)), chatScroll.scrollHeight)
+    }, 20);
+
+  }
+
   return (
-    <div onClick={(e) => {clearNotification(e);}} >
+    <div onClick={(e) => {clearNotification(e); scroll()}} >
       <div id="conversation" onClick={props.click}>
         <img
           className="pro-img"
