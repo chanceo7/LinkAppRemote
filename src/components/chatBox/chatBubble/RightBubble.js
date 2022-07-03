@@ -28,7 +28,6 @@ function RightBubble(props) {
   
 
   const react = (e) => { 
-     document.querySelector(".overlay-bubble").style.visibility = "hidden";
      console.log(e.target.innerHTML)
      props.reactions(e.target.innerHTML, props.index)
    }
@@ -56,6 +55,11 @@ function RightBubble(props) {
               <div className="bubble-actions">
                    <img src={reply_icon} alt="actions" onClick={()=>{reply(props.text)}} />
                    <img src={treeDot_icon} alt="replay" onClick={()=>{props.forward(props.text,props.message_id)}}/>
+                   <div className="text-actions">
+                      <div className="forwards" onClick={()=>{props.forward(props.text,props.message_id)}}>forward</div>
+                      <div className="delete" onClick={()=>{}}>delete</div>
+                      <div>copy</div>
+                  </div>
               </div>
               <div className="Rightbubble-container" onMouseEnter={(e) => onhover(e)}>
                     {props.reply && ( <div className="Rightbubble-replied">{props.reply}</div> )}
