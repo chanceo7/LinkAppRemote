@@ -21,7 +21,6 @@ function Conversation(props) {
     setTimeout(() => {
       const chatScroll=document.querySelector(".text-container")
       chatScroll.scrollTop=chatScroll.scrollHeight;
-      console.log("the : "+(Math.round(chatScroll.scrollTop+chatScroll.clientHeight)), chatScroll.scrollHeight)
     }, 20);
 
   }

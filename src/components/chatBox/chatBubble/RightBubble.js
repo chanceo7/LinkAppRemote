@@ -48,17 +48,22 @@ function RightBubble(props) {
        props.replying(message)
     }  
 
+    const popAction=(index)=>{
+      const actions=document.querySelectorAll('.text-actions')
+      actions[index].style.visibility='visible'
+    }
+
   return (
     <div>
       <div  className={props.prevReaction ? "Rightbubble margin-top" : "Rightbubble"}>  
         <div className="frame" onMouseLeave={(e) => onLeave(e)}>
               <div className="bubble-actions">
                    <img src={reply_icon} alt="actions" onClick={()=>{reply(props.text)}} />
-                   <img src={treeDot_icon} alt="replay" onClick={()=>{props.forward(props.text,props.message_id)}}/>
-                   <div className="text-actions">
+                   <img src={treeDot_icon} alt="replay"  onClick={()=>{popAction(props.index)}}/>
+                   <div className="text-actions right">
                       <div className="forwards" onClick={()=>{props.forward(props.text,props.message_id)}}>forward</div>
-                      <div className="delete" onClick={()=>{}}>delete</div>
-                      <div>copy</div>
+                      <div className="delete"  onClick={()=>{props.delete(props.index, props.message_id)}}>delete</div>
+                      <div className="copy">copy</div>
                   </div>
               </div>
               <div className="Rightbubble-container" onMouseEnter={(e) => onhover(e)}>

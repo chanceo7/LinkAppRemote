@@ -9,11 +9,14 @@ import Search from "../form/search";
 import Chatwrappe from "./chatwrappe";
 import Find from "../form/find/find";
 import Emoji from "../form/emoji/emoji";
+import { useHistory } from "react-router-dom";
+axios.defaults.withCredentials=true
+
+
 
 
 function Chat() {
-  const info = useContext(userData);
-  const [socket] = useState(() => io(":8080", { query: { id: info.user.id } }));
+  const [socket] = useState(() => io(":8080", { query: { id: sessionStorage.getItem('user_id') } }));
   const [conversation, setConversation] = useState([]);
   const [allconversations, setAllconversations] = useState([]);
   const [nomber, setNomber] = useState(0);
@@ -22,6 +25,7 @@ function Chat() {
   const [contact, setContact] = useState({});
   const [render, setRender] = useState([]);
   const [toggle, setToggle] = useState(true);
+  const history = useHistory()
 
   const insert = () => {
     const data = {
@@ -63,7 +67,7 @@ function Chat() {
 
   const getConversation = () => {
     axios
-      .get(`http://localhost:8080/api/get/conv/${info.user.id}`)
+      .get(`http://localhost:8080/api/get/conv/${sessionStorage.getItem('user_id')}`)
       .then((res) => {
         console.log(res.data);
         if (res.data) {
@@ -106,14 +110,16 @@ function Chat() {
   };
 
   useEffect(() => {
+
     let receiver = sessionStorage.getItem("receiver");
-    received && getMessages(receiver, info.user.id);
+    received && getMessages(receiver, sessionStorage.getItem('user_id'));
     getConversation();
 
     const chat = document.querySelector('.chat')
     chat.addEventListener('click',(e)=>{
       const reactions = document.querySelectorAll('.reaction-bar')
       const Rightreactions = document.querySelectorAll('.Right-reaction-bar')
+      const actions = document.querySelectorAll('.text-actions')
       Rightreactions && Rightreactions.forEach(el=> {
         el.style.width="0px"
         el.style.boxShadow="none"
@@ -121,6 +127,9 @@ function Chat() {
       reactions && reactions.forEach(el=>{ 
         el.style.width="0px"
         el.style.boxShadow="none"
+      })
+      actions && actions.forEach((el)=>{
+        el.style.visibility="hidden"
       })
     })
    
@@ -150,7 +159,7 @@ function Chat() {
 
   const deleteChat = () => {
     const R = sessionStorage.getItem("receiver");
-    const U = info.user.id;
+    const U = sessionStorage.getItem('user_id');
     axios
       .delete(`http://localhost:8080/api/delete/chat/${R}/${U}`)
       .then((res) => {
@@ -167,6 +176,14 @@ function Chat() {
     setConversation([...results]);
   };
 
+
+  const logout =()=>{
+    sessionStorage.clear()
+    history.push('/')
+    axios.post(`http://localhost:8080/api/logout`)
+          .then(res=>console.log(res))
+  }
+
   return (
     <div className="home">
       <div className="home-topbar">
@@ -175,11 +192,11 @@ function Chat() {
             className="home-profile-img"
             src="https://yt3.ggpht.com/a/AATXAJwx-_ZnZdDNMMZc8EhFdOsjcPkVIgj89NK8CQ=s900-c-k-c0xffffffff-no-rj-mo"
           />
-          <h3> welcome {info.user.first_name}</h3>
+          <h3> welcome {sessionStorage.getItem('first_name')} {sessionStorage.getItem('last_name')}</h3>
         </div>
         <div className="home-topbar-action">
           <div className="about-logout">about</div>
-          <div className="about-logout">logout</div>
+          <div className="about-logout" onClick={()=>logout()}>logout</div>
         </div>
       </div>
       <Search
@@ -208,7 +225,7 @@ function Chat() {
                   );
                   sessionStorage.setItem("notification", item.notification);
                   sessionStorage.setItem("index", index);
-                  getMessages(item.id, info.user.id);
+                  getMessages(item.id, sessionStorage.getItem('user_id'));
                   setName(item.first_name);
                   setContact(item);
                   clearNotification();

@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "../chatBox/chat.css";
-import userData from "../form/usecontexts";
+import userData from "../form/usecontexts"; 
 
 function Forward(props) {
   const [input, setInput] = useState("");
@@ -79,7 +79,7 @@ function Forward(props) {
     closePopup();
     const data = {
       related:props.msg.msg_id,
-      user_id: info.user.id,
+      user_id: sessionStorage.getItem('user_id'),
       users: contact,
       message: props.msg.msg,
       from: "me",

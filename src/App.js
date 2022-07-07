@@ -7,7 +7,7 @@ import Chat from "./components/chatBox/chat";
 import Chatwrappe from "./components/chatBox/chatwrappe";
 import Checkbox from "./components/form/checkbox";
 import Register from "./components/form/register";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Link,Redirect } from "react-router-dom";
 import userData from "./components/form/usecontexts";
 import React, { useEffect, useState } from "react";
 function App() {
@@ -28,6 +28,15 @@ function App() {
    window.addEventListener("blur",()=>console.log("focused out"))
   })
 
+  const ProtectedRoute = ({ component: Component, ...rest }) => (
+    <Route {...rest} render={(props) => (
+      sessionStorage.getItem('user_id')
+        ? <Component {...props} />
+        : <Redirect to='/' />
+    )} />
+  )
+
+
   return (
     <div className="App">
       <userData.Provider value={{ user, setUser }}>
@@ -36,9 +45,7 @@ function App() {
             <Link to="/">home</Link>| |<Link to="/chat">chat</Link>
           </p>
           <Switch>
-            <Route path="/chat">
-              <Chat />
-            </Route>
+            < ProtectedRoute exact path="/chat" component={Chat} />
             <Route path="/">
               <Register />
             </Route>

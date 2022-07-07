@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 import userData from "./usecontexts";
 import axios from "axios";
+axios.defaults.withCredentials=true;
 
 function Search(props) {
   const [search, setSearch] = useState("");

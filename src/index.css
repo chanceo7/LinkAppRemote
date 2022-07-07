@@ -6,9 +6,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   justify-content: center;
   display: flex;
+  border: calc(34 / 3);
+  background-color:#e2e4e5 ;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+

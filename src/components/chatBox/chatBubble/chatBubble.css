@@ -200,17 +200,41 @@
     background-color: white;
     color: rgb(41, 41, 41);
     border: 1px solid grey;
-    padding: 5px;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     position: absolute;
-    left:3px;
     top: 0;
     z-index: 4;
     visibility: hidden;
+    font-size: 14pt;
+    font-weight: bold;
+    overflow: hidden;
+
 }
+
+.right{
+    right:3px
+}
+
+
+.Left{
+    left:3px
+    
+}
+
+
+
+
 
 .delete, .forwards {
     border-bottom: 1px solid grey;
     background-color: white;
+    padding: 5px;
+    width: 100px;
+
+}
+
+.copy{
+    background-color: white;
+    padding: 5px;
 }

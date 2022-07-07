@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import "../form/register.css";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import userData from "./usecontexts";
@@ -20,19 +21,25 @@ export default function Register() {
 
   const loggin = (e) => {
     e.preventDefault();
-    axios.post(`http://localhost:8080/api/loggin`, lForm).then((res) => {
+    axios.post(`http://localhost:8080/api/loggin`, lForm,{withCredentials: true}).then((res) => {
       if (res.data.length > 0) {
         info.setUser(res.data[0]);
       }
+      sessionStorage.setItem('user_id', res.data[0].id)
+      sessionStorage.setItem('first_name', res.data[0].first_name)
+      sessionStorage.setItem('last_name', res.data[0].last_name)
       history.push("/chat");
     });
   };
 
   function handleSubmit(e) {
     e.preventDefault();
-    history.push("/chat");
     axios.post(`http://localhost:8080/api/register`, form).then((res) => {
-      console.log(res);
+    console.log(res.data);
+    sessionStorage.setItem('user_id', res.data.user_id)
+    sessionStorage.setItem('first_name', res.data.first_name)
+    sessionStorage.setItem('last_name', res.data.last_name)
+    history.push("/chat");
     });
   }
 
@@ -52,81 +59,106 @@ export default function Register() {
     setForm(data);
   }
 
-  const style = {
-    color: "white",
-    backgroundColor: "blue",
-    cusor: "pointer",
-  };
+  const popLogin=(e)=>{
+    const login = document.querySelector('.loggin')
+    login.style.opacity="1"
+    login.style.pointerEvents="all"
+    e.currentTarget.parentNode.style.opacity=0
+    login.style.marginTop="0"
+    e.currentTarget.parentNode.style.marginTop="40px"
+    e.currentTarget.parentNode.style.pointerEvents="none"
+  }
+
+  const popRegistration=(e)=>{
+    const register = document.querySelector('.register')
+    e.currentTarget.parentNode.style.opacity="0"
+    e.currentTarget.parentNode.style.pointerEvents="none"
+    e.currentTarget.parentNode.style.marginTop="50px";
+    register.style.marginTop="0"
+    register.style.opacity="1"
+    register.style.pointerEvents="all"
+  }
+
 
   useEffect(() => {}, []);
 
   return (
-    <div>
-      <div>{info.user.name}</div>
-      <div></div>
-      <form onSubmit={handleSubmit}>
-        <label>first name: </label>
-        <input
-          type={"text"}
-          name={"first_name"}
-          value={form.first_name}
-          onChange={(e) => handlechange(e.target)}
-        />
-        <br />
-        <label>last name: </label>
-        <input
-          type={"text"}
-          name={"last_name"}
-          value={form.last_Name}
-          onChange={(e) => handlechange(e.target)}
-        />
-        <br />
-        <label>email: </label>
-        <input
-          type={"text"}
-          name={"email"}
-          value={form.email}
-          onChange={(e) => handlechange(e.target)}
-        />
-        <br />
-        <label>password: </label>
-        <input
-          type={"text"}
-          name={"password"}
-          value={form.password}
-          onChange={(e) => handlechange(e.target)}
-        />
-        <br />
-        <input style={style} type={"submit"} value={"register"} />
-      </form>
-
-      <h1>logging</h1>
-      <form onSubmit={loggin}>
-        <div>
-          <label>email: </label>
+    <div className="forms-contatiner">
+      <div className="word">Let's chat 😀</div>
+      <div className="register">
+      <div className="login-active" onClick={(e)=>popLogin(e)}>Login</div>
+        <h1>Register</h1>
+        <form onSubmit={handleSubmit}>
+          <label>First name: </label>
+          <input
+            type={"text"}
+            name={"first_name"}
+            value={form.first_name}
+            onChange={(e) => handlechange(e.target)}
+          />
+          <br />
+          <label>Last name: </label>
+          <input
+            type={"text"}
+            name={"last_name"}
+            value={form.last_Name}
+            onChange={(e) => handlechange(e.target)}
+          />
+          <br />
+          <label>Email: </label>
           <input
             type={"text"}
             name={"email"}
-            value={lForm.email}
-            onChange={(e) => {
-              handleLoginChange(e.target);
-            }}
+            value={form.email}
+            onChange={(e) => handlechange(e.target)}
           />
           <br />
-          <label>password : </label>
+          <label>Password: </label>
           <input
-            type={"text"}
+            type={"password"}
             name={"password"}
-            value={lForm.password}
-            onChange={(e) => {
-              handleLoginChange(e.target);
-            }}
+            value={form.password}
+            onChange={(e) => handlechange(e.target)}
           />
-          <div>{alerted}</div>
           <br />
-          <input style={style} type={"submit"} value={"submit"} />
-        </div>
-      </form>
+          <button className="register-submit" type={"submit"}>
+            Register
+          </button>
+        </form>
+      </div>
+
+      <div className="loggin">
+        <div className="login-active" onClick={(e)=>popRegistration(e)}>Register</div>
+        <h1>Login</h1>
+        <form onSubmit={loggin}>
+          <div>
+            <label>email: </label>
+            <input
+              type={"text"}
+              name={"email"}
+              value={lForm.email}
+              onChange={(e) => {
+                handleLoginChange(e.target);
+              }}
+            />
+            <br />
+            <label>password : </label>
+            <input
+              type={"password"}
+              name={"password"}
+              value={lForm.password}
+              onChange={(e) => {
+                handleLoginChange(e.target);
+              }}
+            />
+            <div>{alerted}</div>
+            <br />
+            <button className="register-submit loggin-width" type={"submit"}>
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

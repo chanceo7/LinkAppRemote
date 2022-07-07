@@ -59,6 +59,7 @@ function LeftBubble(props) {
       actions[index].style.visibility='visible'
     }
 
+
   return (
     <div>
       <div  className={props.prevReaction ? "Leftbubble margin-top" : "Leftbubble"}>  
@@ -81,10 +82,10 @@ function LeftBubble(props) {
               <div className="bubble-actions">
                   <img src={reply_icon} alt="actions" onClick={()=>{reply(props.text)}} />
                   <img src={treeDot_icon} alt="replay" onClick={()=>{popAction(props.index)}} />
-                  <div className="text-actions">
+                  <div className="text-actions left">
                       <div className="forwards" onClick={()=>{props.forward(props.text,props.message_id)}}>forward</div>
-                      <div className="delete" onClick={()=>{}}>delete</div>
-                      <div>copy</div>
+                      <div className="delete" onClick={()=>{props.delete(props.index, props.message_id)}}>delete</div>
+                      <div className="copy" onClick={()=>navigator.clipboard.writeText(props.text)}>copy</div>
                   </div>
               </div>
         </div>

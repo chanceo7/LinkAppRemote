@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState, useContext, useRef } from "react";
 import "../chatBox/chat.css";
-import userData from "../form/usecontexts";
 import Forward from "./forward";
 import coverMessage from "../../image/coverMessage.png";
 import emoji from "../../image/emoji.png";
@@ -12,7 +11,6 @@ import Typing from "../form/typing/typing";
 
 
 export default function Chatwrappe(props) {
-  const info = useContext(userData);
   const [text, setText] = useState("");
   const [data, setData] = useState([]);
   const [toFoward, setToFoward] = useState({});
@@ -45,6 +43,7 @@ export default function Chatwrappe(props) {
               replying={(message) => replying(message)}
               message_id={message_info[i].id}
               forward={(msg,msg_id)=>{forward(msg,msg_id)}}
+              delete={(index,id)=>deleteMsg(index,id)}
             />
           )
         : box.push(
@@ -63,6 +62,7 @@ export default function Chatwrappe(props) {
               replying={(message) => replying(message)}
               message_id={message_info[i].id}
               forward={(msg,msg_id)=>{forward(msg,msg_id)}}
+              delete={(index,id)=>deleteMsg(index,id)}
         />
           );
     }
@@ -93,9 +93,6 @@ export default function Chatwrappe(props) {
   };
 
 
-  const change = () => {
-
-  }
 
 
   socket.on("typing receiver",(data)=>{
@@ -120,12 +117,10 @@ export default function Chatwrappe(props) {
 
   useEffect(() => {
     const chatScroll=document.querySelector(".text-container")
-    console.log(chatScroll.scrollTop+558, chatScroll.scrollHeight)
     if(Math.round(chatScroll.scrollTop+chatScroll.clientHeight)==chatScroll.scrollHeight) {
       setTimeout(() => {
         const chatScroll=document.querySelector(".text-container")
         chatScroll.scrollTop=chatScroll.scrollHeight;
-        console.log(chatScroll.scrollHeight)
       }, 20);
     }
     const typing =document.querySelector('.typing-container')
@@ -144,14 +139,14 @@ export default function Chatwrappe(props) {
     }
 
     const data = {
-      user_id: info.user.id,
+      user_id: sessionStorage.getItem('user_id'),
       receiver_id: props.contact.id,
       reply:replyMessage,
       message: text,
       from: "me",
       sender: {
-        id: info.user.id,
-        name: info.user.first_name,
+        id: sessionStorage.getItem('user_id'),
+        name: sessionStorage.getItem('first_name'),
       },
     };
     axios
@@ -199,7 +194,7 @@ export default function Chatwrappe(props) {
       textarea.style.height="2.5rem"
      }
 
-    socket.emit("typing" ,{typer:info.user.id, receiver:props.contact.id})
+    socket.emit("typing" ,{typer:sessionStorage.getItem('user_id'), receiver:props.contact.id})
   }
 
   
