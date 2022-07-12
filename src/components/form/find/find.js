@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "../find/finds.css";
 
 function Find(props) {
-  const [results, setResults] = useState([]);
   const [input, setInput] = useState("");
 
   const finds = (value) => {
@@ -10,7 +9,7 @@ function Find(props) {
     const data = props.conversation;
     const found = [];
 
-    if (value.length == "") {
+    if (value.length === "") {
       document.querySelector(".find-clear").style.visibility = "hidden";
       return props.find([], value.length);
     }
@@ -19,7 +18,6 @@ function Find(props) {
     for (let item of data) {
       if (item.first_name.startsWith(value)) found.push(item);
     }
-    setResults([...found]);
     return props.find(found, value.length);
   };
 

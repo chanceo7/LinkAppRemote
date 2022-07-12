@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect, useReducer, useMemo } from "react";
+import React from "react";
 import "../chatBox/chat.css";
 
 function Conversation(props) {
@@ -36,7 +36,7 @@ function Conversation(props) {
         <span className="names">{props.name}</span>
         <div className="notification">
           {props.notification > 0 && (
-            <div id={props.notification == 0 ? "transp" : ""}>
+            <div id={props.notification === 0 ? "transp" : ""}>
               {props.notification}
             </div>
           )}

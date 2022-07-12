@@ -93,3 +93,10 @@ h1{
     top: 0;
     font-size: 96pt;
 }
+
+.error{
+    background-color: pink;
+    color: black;
+    font-weight: bold;
+}
+

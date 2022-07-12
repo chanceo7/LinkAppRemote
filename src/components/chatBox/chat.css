@@ -3,7 +3,7 @@
     margin-top: 10px;
     width: 100%;
     overflow: auto;
-    padding:10px 10px 20px 10px;
+    padding:30px 10px 0px 10px;    
     box-sizing: border-box;
     flex:1 1 auto
 }
@@ -535,8 +535,11 @@ b {
 
 .send-able{
     color: rgb(49, 147, 204);
-    padding: 2px;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     cursor: pointer;
     border: 1px solid transparent;
 }
@@ -557,6 +560,7 @@ b {
     cursor:not-allowed;
     padding: 2px;
     border: 1px solid transparent;
+    pointer-events: none;
 }
 
 
@@ -648,4 +652,7 @@ b {
     background-color: transparent;
     overflow: hidden;
 }
+
+
+
 

@@ -1,12 +1,10 @@
-import React, { useContext, useRef, useState, useEffect } from "react";
-import userData from "./usecontexts";
+import React, {useState} from "react";
 import axios from "axios";
 axios.defaults.withCredentials=true;
 
 function Search(props) {
   const [search, setSearch] = useState("");
   const [contacts, setContact] = useState([]);
-  const info = useContext(userData);
   const conversation = props.conversation;
   const hide_cont = document.querySelector(".conct-cont");
 
@@ -14,7 +12,7 @@ function Search(props) {
     setSearch(el.value);
     document.querySelector(".search-clear").style.visibility = "visible";
     const data = el.value;
-    if (data == "") {
+    if (data === "") {
       document.querySelector(".search-clear").style.visibility = "hidden";
       hide_cont.style.visibility = "hidden";
       return setContact([]);
@@ -22,7 +20,7 @@ function Search(props) {
     axios
       .post("http://localhost:8080/api/search/contact", { search: data })
       .then((res) => {
-        if (res.data.length == 0) hide_cont.style.visibility = "hidden";
+        if (res.data.length === 0) hide_cont.style.visibility = "hidden";
         if (res.data.length > 0) hide_cont.style.visibility = "visible";
         if (res.data) setContact(res.data);
       });
@@ -30,11 +28,11 @@ function Search(props) {
 
   const insertReceiver = (data, index) => {
     const allContact = document.querySelectorAll(".contact");
-    if (data.id == info.user.id) {
+    if (data.id === sessionStorage.getItem('user_id')) {
       return (allContact[index].style.animationName = "shake");
     }
     for (let i = 0; i < conversation.length; i++) {
-      if (data.id == conversation[i].id) {
+      if (data.id === conversation[i].id) {
         allContact[index].style.animationName = "shake";
         return;
       }

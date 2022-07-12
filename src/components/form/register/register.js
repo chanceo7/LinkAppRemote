@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
-import "../form/register.css";
+import React, { useEffect, useState } from "react";
+import "../register/register.css"
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import userData from "./usecontexts";
+
 
 export default function Register() {
   const history = useHistory();
-  const info = useContext(userData);
-  const [alerted, setAlert] = useState("");
+  const [alerted, setAlert] = useState(""); 
   const [form, setForm] = useState({
     first_name: "",
     last_name: "",
@@ -22,9 +21,6 @@ export default function Register() {
   const loggin = (e) => {
     e.preventDefault();
     axios.post(`http://localhost:8080/api/loggin`, lForm,{withCredentials: true}).then((res) => {
-      if (res.data.length > 0) {
-        info.setUser(res.data[0]);
-      }
       sessionStorage.setItem('user_id', res.data[0].id)
       sessionStorage.setItem('first_name', res.data[0].first_name)
       sessionStorage.setItem('last_name', res.data[0].last_name)
@@ -35,7 +31,6 @@ export default function Register() {
   function handleSubmit(e) {
     e.preventDefault();
     axios.post(`http://localhost:8080/api/register`, form).then((res) => {
-    console.log(res.data);
     sessionStorage.setItem('user_id', res.data.user_id)
     sessionStorage.setItem('first_name', res.data.first_name)
     sessionStorage.setItem('last_name', res.data.last_name)
@@ -84,7 +79,7 @@ export default function Register() {
 
   return (
     <div className="forms-contatiner">
-      <div className="word">Let's chat 😀</div>
+      <div className="word">Let's chat <span role="img" aria-label="smile">😀</span></div>
       <div className="register">
       <div className="login-active" onClick={(e)=>popLogin(e)}>Login</div>
         <h1>Register</h1>
@@ -97,6 +92,7 @@ export default function Register() {
             onChange={(e) => handlechange(e.target)}
           />
           <br />
+          <span className="error">name must be at lest 2</span>
           <label>Last name: </label>
           <input
             type={"text"}
@@ -105,6 +101,7 @@ export default function Register() {
             onChange={(e) => handlechange(e.target)}
           />
           <br />
+          <span className="error">name too</span>
           <label>Email: </label>
           <input
             type={"text"}
@@ -113,6 +110,7 @@ export default function Register() {
             onChange={(e) => handlechange(e.target)}
           />
           <br />
+          <span className="error"></span>
           <label>Password: </label>
           <input
             type={"password"}
@@ -121,6 +119,7 @@ export default function Register() {
             onChange={(e) => handlechange(e.target)}
           />
           <br />
+          <span className="error"></span>
           <button className="register-submit" type={"submit"}>
             Register
           </button>

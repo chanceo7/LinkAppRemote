@@ -6,31 +6,30 @@
 
 :root{
     --delay:2s;
+    --theme:rgb(23, 166, 185)
 }
 
 
 .typing-container{
-    color:rgba(34, 34, 34, 0.808);
     display: flex;
     align-items: flex-end;
     width: fit-content;
     border: 1px solid transparent;
     gap: 3px;
-    color: grey;
     font-family: Georgia, 'Times New Roman', Times, serif;
     visibility: hidden;
 }
 .typing{
-   color: rgba(34, 34, 34, 0.808);
+   color: black
 }
 
 
 .dot{
-    width: 5px;
-    height: 5px;
+    width: 2.5px;
+    height: 2.5px;
     border-radius: 50%;
-    background-color: rgba(34, 34, 34, 0.719);
-    margin-bottom: 4px;
+    background-color: black;
+    margin-bottom: 3px;
     position: relative;
     bottom: 0px;
     animation-duration: 2.5s;
@@ -59,3 +58,4 @@
    30%{bottom: 0px;}
    100%{bottom: 0px;}
 }
+

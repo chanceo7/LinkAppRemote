@@ -1,7 +1,7 @@
 import axios from "axios";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../chatBox/chat.css";
-import userData from "../form/usecontexts"; 
+
 
 function Forward(props) {
   const [input, setInput] = useState("");
@@ -11,13 +11,12 @@ function Forward(props) {
   const [disable, setDisable] = useState(true);
   const conv = useRef();
   const absolute = useRef();
-  const info = useContext(userData);
   const socket = props.socket;
 
   const handleChange = (e) => {
     const value = e.target.value;
     setInput(value);
-    if (value == "") {
+    if (value === "") {
       absolute.current.style.display = "none";
       conv.current.style.display = "contents";
       return setResults([]);
@@ -38,7 +37,7 @@ function Forward(props) {
 
   const insertContact = (item) => {
     for (let i = 0; i < contact.length; i++) {
-      if (contact[i].id == item.id) {
+      if (contact[i].id === item.id) {
         const contactArr = document.querySelectorAll(".forward-contact");
         contactArr[i].style.animationName = "shake";
         console.log(contactArr[i]);
@@ -55,7 +54,7 @@ function Forward(props) {
 
   const close = (index) => {
     const data = contact;
-    data.length == 1 && setDisable(true);
+    data.length === 1 && setDisable(true);
     data.splice(index, 1);
     return setContact([...data]);
   };
@@ -166,7 +165,7 @@ function Forward(props) {
                 >
                   <div className="conv-box">
                     {" "}
-                    <img src="https://th.bing.com/th/id/OIP.EygFVLaHGtsc4JiwaK4ETwHaHa?w=206&h=206&c=7&r=0&o=5&pid=1.7" />{" "}
+                    <img src="https://th.bing.com/th/id/OIP.EygFVLaHGtsc4JiwaK4ETwHaHa?w=206&h=206&c=7&r=0&o=5&pid=1.7"  alt="profile" />{" "}
                     <span>{item.first_name}</span>
                   </div>
                 </div>
@@ -186,7 +185,7 @@ function Forward(props) {
                 >
                   <div className="conv-box">
                     {" "}
-                    <img src="https://th.bing.com/th/id/R.12ffda7772726f505cc8f029a098ea0b?rik=%2bSlOC02qhlZC1Q&riu=http%3a%2f%2fimages4.fanpop.com%2fimage%2fphotos%2f22300000%2fKakashi-kakashi-22321330-1280-720.jpg&ehk=%2bIH2jrKOIAAle6M6Ht142Q1uCSqU31KEB7SW096%2fAXA%3d&risl=&pid=ImgRaw&r=0" />{" "}
+                    <img src="https://th.bing.com/th/id/R.12ffda7772726f505cc8f029a098ea0b?rik=%2bSlOC02qhlZC1Q&riu=http%3a%2f%2fimages4.fanpop.com%2fimage%2fphotos%2f22300000%2fKakashi-kakashi-22321330-1280-720.jpg&ehk=%2bIH2jrKOIAAle6M6Ht142Q1uCSqU31KEB7SW096%2fAXA%3d&risl=&pid=ImgRaw&r=0" alt="profile" />{" "}
                     <span>{item.first_name}</span>
                   </div>
                 </div>

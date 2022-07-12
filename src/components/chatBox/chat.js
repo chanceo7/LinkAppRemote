@@ -1,14 +1,11 @@
-import React, { useState, useContext, useEffect } from "react";
-import Checkbox from "../form/checkbox";
+import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 import "../chatBox/chat.css";
 import axios from "axios";
-import userData from "../form/usecontexts";
 import Conversation from "./conversation";
 import Search from "../form/search";
 import Chatwrappe from "./chatwrappe";
 import Find from "../form/find/find";
-import Emoji from "../form/emoji/emoji";
 import { useHistory } from "react-router-dom";
 axios.defaults.withCredentials=true
 
@@ -32,12 +29,10 @@ function Chat() {
       first_name: "chance",
       notification: nomber,
     };
-
     setConversation((prev) => {
       return [data, ...prev];
     });
     setNomber(nomber + 1);
-    console.log(conversation);
   };
 
 
@@ -69,7 +64,6 @@ function Chat() {
     axios
       .get(`http://localhost:8080/api/get/conv/${sessionStorage.getItem('user_id')}`)
       .then((res) => {
-        console.log(res.data);
         if (res.data) {
           setConversation(res.data);
           setAllconversations(res.data);
@@ -78,7 +72,7 @@ function Chat() {
           setConversation([]);
         }
         const conv_id = sessionStorage.getItem("conv_id");
-        conv_id == "zzzz" && sessionStorage.setItem("conv_id", res.data[0].conv_id);       
+        conv_id === "zzzz" && sessionStorage.setItem("conv_id", res.data[0].conv_id);       
       });
   };
 
@@ -91,7 +85,7 @@ function Chat() {
   const clearNotification = () => {
     let index = sessionStorage.getItem("index");
     let notification = sessionStorage.getItem("notification");
-    if (notification == 0) {
+    if (notification === 0) {
       return;
     }
     const data = conversation;
@@ -114,7 +108,6 @@ function Chat() {
     let receiver = sessionStorage.getItem("receiver");
     received && getMessages(receiver, sessionStorage.getItem('user_id'));
     getConversation();
-
     const chat = document.querySelector('.chat')
     chat.addEventListener('click',(e)=>{
       const reactions = document.querySelectorAll('.reaction-bar')
@@ -172,7 +165,7 @@ function Chat() {
   };
 
   const find = (results, len) => {
-    if (len == 0) return setConversation([...allconversations]);
+    if (len === 0) return setConversation([...allconversations]);
     setConversation([...results]);
   };
 
@@ -191,6 +184,7 @@ function Chat() {
           <img
             className="home-profile-img"
             src="https://yt3.ggpht.com/a/AATXAJwx-_ZnZdDNMMZc8EhFdOsjcPkVIgj89NK8CQ=s900-c-k-c0xffffffff-no-rj-mo"
+            alt="profile"
           />
           <h3> welcome {sessionStorage.getItem('first_name')} {sessionStorage.getItem('last_name')}</h3>
         </div>

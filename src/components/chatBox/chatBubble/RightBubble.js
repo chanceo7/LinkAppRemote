@@ -1,5 +1,4 @@
-import axios from "axios";
-import React, { useState, useRef } from "react";
+import React from "react";
 import "../chatBubble/chatBubble.css";
 import treeDot_icon from '../../../image/treeDot_icon.png'
 import reply_icon from '../../../image/reply_icon.png'
@@ -12,10 +11,7 @@ function RightBubble(props) {
   const popReaction = (e) => {
     const target=e.target.parentNode.querySelector(".Right-reaction-bar")
     const allAnimation=target.querySelectorAll('.reaction')
-    let index=4
-    console.log(allAnimation)
     let delay=0.03
-
     for(let x=allAnimation.length-1; x>-1; x--){
       allAnimation[x].style.animationDuration="0.3s";
       allAnimation[x].style.animationDelay=`${delay}s`
@@ -32,12 +28,10 @@ function RightBubble(props) {
      props.reactions(e.target.innerHTML, props.index)
    }
 
-
-   const onhover = (e) => {
-   const first = document.querySelectorAll(".bubble-actions");
-   first[props.index].style.visibility='visible';
-   
-   }
+  const onhover = (e) => {
+  const first = document.querySelectorAll(".bubble-actions");
+  first[props.index].style.visibility='visible';
+  }
 
     const onLeave = (e) => { 
         const first = document.querySelectorAll(".bubble-actions");

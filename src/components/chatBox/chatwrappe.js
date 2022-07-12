@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState, useContext, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../chatBox/chat.css";
 import Forward from "./forward";
 import coverMessage from "../../image/coverMessage.png";
@@ -8,6 +8,7 @@ import Emoji from "../form/emoji/emoji";
 import LeftBubble from "./chatBubble/chatBubble";
 import RightBubble from "./chatBubble/RightBubble";
 import Typing from "../form/typing/typing";
+import moment from "moment";
 
 
 export default function Chatwrappe(props) {
@@ -24,9 +25,13 @@ export default function Chatwrappe(props) {
   
 
   function text_faSliders(message_info) {
+
+    let date = message_info[0] && message_info[0].created_at.slice(0,10)
+
+    message_info[0] && console.log(moment(date).format('ll'))
     const box = [];
-    for (let i = 0; i < message_info.length; i++) {
-      message_info[i].from == "other"
+    for (let i = 0; i < message_info.length; i++) { 
+      message_info[i].from === "other"
         ? box.push(
             <LeftBubble
               deleteReaction={(index) => props.deleteReaction(index)}
@@ -96,11 +101,11 @@ export default function Chatwrappe(props) {
 
 
   socket.on("typing receiver",(data)=>{
-     console.log(data.typer, sessionStorage.getItem('receiver'))
+    console.log(data.typer, sessionStorage.getItem('receiver'))
     const receiver=sessionStorage.getItem('receiver')
-    if (data.typer != receiver) return
+    if (data.typer !== receiver) return
      const typing =document.querySelector('.typing-container')
-     typing.style.visibility="visible"   
+     typing.style.visibility="visible"  
 
      setTimeout(() => {
       typing.style.visibility="hidden" 
@@ -117,7 +122,7 @@ export default function Chatwrappe(props) {
 
   useEffect(() => {
     const chatScroll=document.querySelector(".text-container")
-    if(Math.round(chatScroll.scrollTop+chatScroll.clientHeight)==chatScroll.scrollHeight) {
+    if(Math.round(chatScroll.scrollTop+chatScroll.clientHeight)===chatScroll.scrollHeight) {
       setTimeout(() => {
         const chatScroll=document.querySelector(".text-container")
         chatScroll.scrollTop=chatScroll.scrollHeight;
@@ -213,12 +218,13 @@ export default function Chatwrappe(props) {
           <img
             className="chat-profile-img"
             src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/07b59814110649.5627d8aa58212.jpg"
+            alt="profile"
           />
           <h2>{props.name}</h2>
         <Typing/>
         </div>
         <div className="receiver-info"onClick={() => { toggleDetails()}}   >
-          <h3 className={ props.toggle == true ? "action-desactive" : "action-active" }>i</h3>
+          <h3 className={ props.toggle === true ? "action-desactive" : "action-active" }>i</h3>
         </div>
       </div>
       <div ref={scroll} className="text-container">{data}</div>
@@ -275,15 +281,15 @@ export default function Chatwrappe(props) {
               coverChat();
             }}
           >
-            <img src="https://th.bing.com/th/id/OIP.MeHH1uPILocqcbznizYrggHaHa?pid=ImgDet&rs=1" />
+            <img src="https://th.bing.com/th/id/OIP.MeHH1uPILocqcbznizYrggHaHa?pid=ImgDet&rs=1" alt="profile"/>
             <p>Delete Chat</p>
           </div>
           <div id="receiver-block">
-            <img src="https://th.bing.com/th/id/R.5d65a339c8fb4b867e7cddb2d2c34925?rik=lv0ctMESdPTYmg&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fdownload_559077.png&ehk=r5SSG1ie5LT4J5YGqxS1wNQL7k0VSR3mMrJdd%2fCFz5E%3d&risl=&pid=ImgRaw&r=0" />
+            <img src="https://th.bing.com/th/id/R.5d65a339c8fb4b867e7cddb2d2c34925?rik=lv0ctMESdPTYmg&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fdownload_559077.png&ehk=r5SSG1ie5LT4J5YGqxS1wNQL7k0VSR3mMrJdd%2fCFz5E%3d&risl=&pid=ImgRaw&r=0" alt="profile"/>
             <p>Block</p>
           </div>
           <div id="receiver-report">
-            <img src="https://cdn.onlinewebfonts.com/svg/img_78870.png" />
+            <img src="https://cdn.onlinewebfonts.com/svg/img_78870.png" alt="profile" />
             <p>Report</p>
           </div>
         </div>

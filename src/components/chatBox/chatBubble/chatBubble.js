@@ -1,5 +1,5 @@
-import axios from "axios";
-import React, { useState, useRef } from "react";
+
+import React from "react";
 import "../chatBubble/chatBubble.css";
 import treeDot_icon from '../../../image/treeDot_icon.png'
 import reply_icon from '../../../image/reply_icon.png'
