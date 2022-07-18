@@ -71,7 +71,7 @@ export default function Chatwrappe(props) {
         />
           );
     }
-    setData(box);
+    return box
   }
 
   const forward = (msg,msg_id) => {
@@ -120,21 +120,15 @@ export default function Chatwrappe(props) {
     props.clear();
   };
 
+  
   useEffect(() => {
     const chatScroll=document.querySelector(".text-container")
-    if(Math.round(chatScroll.scrollTop+chatScroll.clientHeight)===chatScroll.scrollHeight) {
-      setTimeout(() => {
-        const chatScroll=document.querySelector(".text-container")
-        chatScroll.scrollTop=chatScroll.scrollHeight;
-      }, 20);
-    }
+    chatScroll.scrollTop=chatScroll.scrollHeight;
     const typing =document.querySelector('.typing-container')
     typing.style.visibility="hidden" 
-    text_faSliders(texts);
-    return(()=>{
-
-    })
   }, [props.messages]);
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -163,7 +157,7 @@ export default function Chatwrappe(props) {
         texts.push(data);
         setText("");
         const textarea=document.querySelector('.text-input')
-        textarea.style.height="2.5rem"
+        textarea.style.height="2.5rem";
         setReplyMessage("")
         text_faSliders(texts);
       });
@@ -227,7 +221,7 @@ export default function Chatwrappe(props) {
           <h3 className={ props.toggle === true ? "action-desactive" : "action-active" }>i</h3>
         </div>
       </div>
-      <div ref={scroll} className="text-container">{data}</div>
+      <div ref={scroll} className="text-container">{text_faSliders(texts)}</div>
       <div className="chat-input-container">
         {replyMessage && (
           <div className="chat-reply ">
